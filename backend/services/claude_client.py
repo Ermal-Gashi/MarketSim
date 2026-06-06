@@ -21,12 +21,12 @@ def _strip_fences(text: str) -> str:
     return re.sub(r"^```[a-zA-Z]*\n?|```$", "", text.strip(), flags=re.MULTILINE).strip()
 
 
-def call_claude(system_prompt: str, user_prompt: str) -> dict:
+def call_claude(system_prompt: str, user_prompt: str, max_tokens: int = MAX_TOKENS) -> dict:
     """Call Claude and return parsed JSON. Retries once on JSON parse failure."""
     for attempt in range(2):
         response = _client.messages.create(
             model=MODEL,
-            max_tokens=MAX_TOKENS,
+            max_tokens=max_tokens,
             system=system_prompt,
             messages=[{"role": "user", "content": user_prompt}],
         )

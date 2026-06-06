@@ -323,6 +323,191 @@ def check_agent3() -> bool:
     return True
 
 
+# Hardcoded Agent 3 output stub for Brazil / TaskFlow
+AGENT3_OUTPUT_STUB = {
+    "cultural_fit_score": 62,
+    "score_label": "Moderate Fit",
+    "dimension_analysis": [
+        {
+            "dimension": "PDI",
+            "score": 69,
+            "implication": (
+                "High power distance means task assignment authority must come from the top; "
+                "bottom-up adoption will stall without executive sponsorship."
+            ),
+        },
+        {
+            "dimension": "IDV",
+            "score": 38,
+            "implication": (
+                "Collectivist culture values group harmony — the team collaboration angle resonates, "
+                "but self-serve PLG will underperform; peer referrals and group demos work better."
+            ),
+        },
+        {
+            "dimension": "MAS",
+            "score": 49,
+            "implication": (
+                "Balanced masculinity means neither pure performance metrics nor pure work-life-balance "
+                "messaging will dominate; blend efficiency gains with reducing team stress."
+            ),
+        },
+        {
+            "dimension": "UAI",
+            "score": 76,
+            "implication": (
+                "High uncertainty avoidance creates demand for proof — case studies, free trials, "
+                "and local references are essential before any commitment."
+            ),
+        },
+        {
+            "dimension": "LTO",
+            "score": 44,
+            "implication": (
+                "Moderate long-term orientation means ROI arguments should emphasise near-term "
+                "productivity gains rather than multi-year strategic transformation."
+            ),
+        },
+        {
+            "dimension": "IVR",
+            "score": 59,
+            "implication": (
+                "Moderately indulgent culture appreciates polished UX and enjoyable onboarding; "
+                "a clunky interface will be disproportionately penalised."
+            ),
+        },
+    ],
+    "overall_explanation": (
+        "Brazil presents a moderate cultural fit for TaskFlow. The collectivist orientation "
+        "supports team-based collaboration tools, but high uncertainty avoidance and power distance "
+        "will require a sales-led motion with local social proof to unlock enterprise deals. "
+        "PLG alone will not be sufficient in this market."
+    ),
+    "messaging_recommendations": [
+        "Lead with 'your team, always in sync' — emphasise collective harmony over individual productivity",
+        "Use Brazilian customer logos and Portuguese-language case studies in every sales touchpoint",
+        "Frame auto-assignment as 'fair workload distribution' not 'AI taking over' to reduce UAI friction",
+    ],
+    "sales_motion_recommendation": (
+        "sales-led: Brazil's high PDI and UAI mean deals require executive buy-in and "
+        "hands-on demos before any trial commitment."
+    ),
+    "cultural_red_flags": [
+        "English-only onboarding will immediately disqualify TaskFlow for mid-market Brazilian buyers",
+        "Positioning around 'AI replacing managers' will trigger resistance in high-PDI organisations",
+    ],
+    "cultural_tailwinds": [
+        "Brazil's booming remote-work culture post-2020 creates genuine pull for async coordination tools",
+        "WhatsApp-native workforce means Slack-integrated tools have a familiar integration story",
+        "Growing SME digitalisation wave funded by Sebrae programmes creates an educated buyer pool",
+    ],
+    "data_source": "hofstede.json",
+}
+
+AGENT4_OPTIONAL_FIELDS = [
+    "conversation_starter",
+    "deal_breaker",
+    "influencers",
+    "time_to_close",
+]
+
+VALID_LIKELIHOOD = {"High", "Medium", "Low"}
+VARIANCE_PROFILE_FIELDS = ["conversion_range", "key_variables", "tipping_point_to_high", "tipping_point_to_low"]
+MANDATORY_PERSONA_FIELDS = [
+    "archetype_name", "name", "age", "job_title", "city",
+    "company_size", "why_they_buy", "what_stops_them",
+    "how_they_discover", "likelihood_to_convert", "variance_profile",
+]
+
+
+def check_agent4() -> bool:
+    from backend.agents.persona_generator import run
+
+    agent4_input = {
+        "agent1_output": AGENT1_OUTPUT_STUB,
+        "agent2_output": AGENT2_OUTPUT_STUB,
+        "agent3_output": AGENT3_OUTPUT_STUB,
+    }
+
+    print("\n--- Agent 4: Persona Generator ---")
+    print("Input: agent1=TaskFlow, agent2=Brazil, agent3=Cultural Fit stub\n")
+
+    try:
+        result = run(agent4_input)
+    except ValueError as exc:
+        print(f"[FAIL] Validation error: {exc}")
+        return False
+    except Exception as exc:
+        print(f"[FAIL] run() raised {type(exc).__name__}: {exc}")
+        return False
+
+    personas = result.get("personas", [])
+    errors = []
+
+    if len(personas) != 5:
+        errors.append(f"expected 5 personas, got {len(personas)}")
+
+    for i, p in enumerate(personas):
+        label = f"Persona {i+1} ({p.get('archetype_name', '?')})"
+        for field in MANDATORY_PERSONA_FIELDS:
+            if field not in p:
+                errors.append(f"{label}: missing '{field}'")
+
+        if p.get("likelihood_to_convert") not in VALID_LIKELIHOOD:
+            errors.append(f"{label}: invalid likelihood '{p.get('likelihood_to_convert')}'")
+
+        vp = p.get("variance_profile")
+        if not isinstance(vp, dict):
+            errors.append(f"{label}: variance_profile is not an object")
+        else:
+            for vf in VARIANCE_PROFILE_FIELDS:
+                if vf not in vp:
+                    errors.append(f"{label}: variance_profile missing '{vf}'")
+
+    if errors:
+        for e in errors:
+            print(f"[FAIL] {e}")
+        return False
+
+    # Diversity checks (warnings only — not hard failures)
+    cities = [p.get("city") for p in personas]
+    unique_cities = set(cities)
+    likelihoods = [p.get("likelihood_to_convert") for p in personas]
+    ages = [p.get("age") for p in personas if isinstance(p.get("age"), int)]
+    job_titles = [p.get("job_title") for p in personas]
+
+    print("Diversity check:")
+    print(f"  Cities ({len(unique_cities)} unique): {sorted(unique_cities)}")
+    print(f"  Likelihoods: {likelihoods}")
+    age_span = max(ages) - min(ages) if len(ages) >= 2 else 0
+    print(f"  Age range: {min(ages)}-{max(ages)} (span={age_span})")
+    print(f"  Job titles unique: {len(set(job_titles)) == len(job_titles)}")
+
+    print("\nPersonas (mandatory fields):")
+    for i, p in enumerate(personas):
+        print(f"\n  [{i+1}] {p.get('archetype_name')} — {p.get('name')}, {p.get('age')}")
+        print(f"       {p.get('job_title')} @ {p.get('company_size')} in {p.get('city')}")
+        print(f"       Likelihood: {p.get('likelihood_to_convert')}")
+        print(f"       Why they buy: {p.get('why_they_buy')}")
+        print(f"       What stops them: {p.get('what_stops_them')}")
+        print(f"       How they discover: {p.get('how_they_discover')}")
+        vp = p.get("variance_profile", {})
+        print(f"       Variance profile:")
+        print(f"         range: {vp.get('conversion_range')}")
+        print(f"         key variables: {vp.get('key_variables')}")
+        print(f"         tipping->High: {vp.get('tipping_point_to_high')}")
+        print(f"         tipping->Low:  {vp.get('tipping_point_to_low')}")
+
+    print("\nPersonas (optional fields):")
+    for i, p in enumerate(personas):
+        print(f"\n  [{i+1}] {p.get('archetype_name')}")
+        for field in AGENT4_OPTIONAL_FIELDS:
+            print(f"       {field}: {p.get(field)}")
+
+    print("\n[PASS] Agent 4 returned 5 valid personas with all mandatory fields.")
+    return True
+
+
 if __name__ == "__main__":
-    results = [check_agent1(), check_agent2(), check_agent3()]
+    results = [check_agent1(), check_agent2(), check_agent3(), check_agent4()]
     sys.exit(0 if all(results) else 1)
