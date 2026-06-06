@@ -9,6 +9,7 @@ _BASE = "https://api.worldbank.org/v2/country/{code}/indicator/{indicator}?forma
 # World Bank indicator codes
 _GDP_INDICATOR = "NY.GDP.PCAP.CD"          # GDP per capita (current USD)
 _INTERNET_INDICATOR = "IT.NET.USER.ZS"     # Internet users (% of population)
+_CONSUMPTION_INDICATOR = "NE.CON.PRVT.PC.KD"  # Household final consumption per capita (constant 2015 USD)
 
 
 def _fetch_indicator(country_code: str, indicator: str) -> float | None:
@@ -29,6 +30,19 @@ def _fetch_indicator(country_code: str, indicator: str) -> float | None:
     except Exception as exc:
         logger.warning("World Bank fetch failed for %s / %s: %s", country_code, indicator, exc)
         return None
+
+
+def get_household_consumption(country_code: str) -> dict:
+    """
+    Fetch household final consumption expenditure per capita (constant 2015 USD).
+    Indicator: NE.CON.PRVT.PC.KD
+    Returns a dict with household_consumption_usd (float or null) and data_source.
+    """
+    value = _fetch_indicator(country_code, _CONSUMPTION_INDICATOR)
+    return {
+        "household_consumption_usd": value,
+        "data_source": "real" if value is not None else "estimated",
+    }
 
 
 def get_country_data(country_code: str) -> dict:

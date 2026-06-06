@@ -508,6 +508,193 @@ def check_agent4() -> bool:
     return True
 
 
+# Hardcoded Agent 4 output stub for Brazil / TaskFlow
+AGENT4_OUTPUT_STUB = {
+    "personas": [
+        {
+            "archetype_name": "The Burnout-Aware Engineering Lead",
+            "name": "Rodrigo Mendonca",
+            "age": 34,
+            "job_title": "Head of Engineering",
+            "city": "Sao Paulo",
+            "company_size": "80-150 employees",
+            "why_they_buy": "Loses hours weekly to manual sprint delegation; TaskFlow's auto-assignment directly attacks that pain.",
+            "what_stops_them": "High UAI (76) means he needs a Brazilian reference customer before signing. English-only onboarding is a dealbreaker.",
+            "how_they_discover": "LinkedIn post in a Brazilian engineering community shared by a peer EM.",
+            "likelihood_to_convert": "High",
+            "variance_profile": {
+                "conversion_range": "Medium to High",
+                "key_variables": ["Portuguese onboarding", "Brazilian case study", "CTO approval", "BRL/USD sensitivity"],
+                "tipping_point_to_high": "Peer vouches via WhatsApp with a Brazilian case study attached.",
+                "tipping_point_to_low": "English-only trial; black-box AI assignment logic.",
+            },
+            "conversation_starter": "How many hours a week does your team lose figuring out who picks up the next ticket?",
+            "deal_breaker": "English-only UI — abandons trial within 48 hours.",
+            "influencers": ["CTO", "Senior Backend Engineer", "Head of People & Culture"],
+            "time_to_close": "4-8 weeks",
+        },
+        {
+            "archetype_name": "The Cautious Operations Director",
+            "name": "Fernanda Castilho",
+            "age": 47,
+            "job_title": "Director of Operations",
+            "city": "Sao Paulo",
+            "company_size": "200-500 employees",
+            "why_they_buy": "Board-level deadline slippage conversation; needs workload visibility dashboard to make the case for structural change.",
+            "what_stops_them": "High PDI (69) means she won't champion without COO buy-in. UAI (76) requires formal pilot proposal and SLAs.",
+            "how_they_discover": "In-person B2B SaaS event in Sao Paulo or management consultant referral.",
+            "likelihood_to_convert": "Medium",
+            "variance_profile": {
+                "conversion_range": "Low to High",
+                "key_variables": ["COO sponsorship", "Portuguese pilot proposal", "LGPD compliance docs", "Brazilian reference", "Dedicated CSM"],
+                "tipping_point_to_high": "COO joins demo and frames it as a strategic ops initiative.",
+                "tipping_point_to_low": "IT raises LGPD concerns; no Portuguese compliance docs within evaluation window.",
+            },
+            "conversation_starter": "When a deadline slips, how long does it take to identify which person's plate was already overloaded?",
+            "deal_breaker": "No local support in Portuguese or no formal data-residency documentation.",
+            "influencers": ["COO", "Head of IT", "External Management Consultant"],
+            "time_to_close": "3-6 months",
+        },
+        {
+            "archetype_name": "The Ambitious Project Champion",
+            "name": "Lucas Ferreira",
+            "age": 29,
+            "job_title": "Senior Project Coordinator",
+            "city": "Rio de Janeiro",
+            "company_size": "40-80 employees",
+            "why_they_buy": "Wants to be the person who fixed the workflow before making a case for promotion to PM.",
+            "what_stops_them": "Zero budget authority; high PDI means manager must be convinced first. Can't recommend publicly until stress-tested.",
+            "how_they_discover": "YouTube tutorial in Portuguese or r/brdev thread on async team management.",
+            "likelihood_to_convert": "Medium",
+            "variance_profile": {
+                "conversion_range": "Low to Medium",
+                "key_variables": ["Self-serve free trial", "Portuguese help docs", "Manager receptiveness", "Peer validation"],
+                "tipping_point_to_high": "Manager formally tasks him with solving delegation chaos.",
+                "tipping_point_to_low": "Manager dismisses it or trial requires IT provisioning.",
+            },
+            "conversation_starter": "If you could show your manager one dashboard proving why last month's delivery slipped, what would change?",
+            "deal_breaker": "No self-serve free trial — can't build conviction without hands-on access.",
+            "influencers": ["Project Manager", "CTO or Head of Product"],
+            "time_to_close": "6-12 weeks from champion to close",
+        },
+        {
+            "archetype_name": "The Price-Sensitive SME Founder",
+            "name": "Tatiane Braga",
+            "age": 41,
+            "job_title": "Founder & CEO",
+            "city": "Belo Horizonte",
+            "company_size": "10-25 employees",
+            "why_they_buy": "Buying back her own hours — simultaneously PM, HR, and client lead at a 15-person agency.",
+            "what_stops_them": "Mid-tier pricing stacks against Runrun.it's aggressive SME pricing. UAI means team must test and accept before she pays.",
+            "how_they_discover": "Sebrae digitalisation webinar or Brazilian entrepreneurship podcast.",
+            "likelihood_to_convert": "Low",
+            "variance_profile": {
+                "conversion_range": "Low to Medium",
+                "key_variables": ["SME pricing vs Runrun.it", "Portuguese-first onboarding", "30-day ROI visibility", "Peer founder recommendation"],
+                "tipping_point_to_high": "Founder peer shows real before/after and TaskFlow offers 3-month SME intro price.",
+                "tipping_point_to_low": "Runrun.it runs a targeted discount campaign at the same moment.",
+            },
+            "conversation_starter": "If TaskFlow gave you back 10 hours a month, what would you do with that time for your clients?",
+            "deal_breaker": "Monthly price above Runrun.it for comparable seat count.",
+            "influencers": None,
+            "time_to_close": "2-4 weeks if pricing hurdle cleared",
+        },
+        {
+            "archetype_name": "The Quietly Influential People Manager",
+            "name": "Mariana Souza",
+            "age": 38,
+            "job_title": "Head of People & Culture",
+            "city": "Rio de Janeiro",
+            "company_size": "100-200 employees",
+            "why_they_buy": "eNPS burnout signals trace to opaque workload — TaskFlow's visibility dashboard gives her data to make the case to leadership.",
+            "what_stops_them": "No direct SaaS budget; must broker cross-departmental buy-in. AI framing risks being read as surveillance.",
+            "how_they_discover": "Portuguese HR tech blog or LinkedIn article from a Brazilian People Ops leader.",
+            "likelihood_to_convert": "Medium",
+            "variance_profile": {
+                "conversion_range": "Low to High",
+                "key_variables": ["People team dashboard framing", "Joint eval with Engineering", "Leadership mandate", "Wellbeing vs surveillance distinction"],
+                "tipping_point_to_high": "CEO names burnout reduction a Q3 priority and tasks her jointly with Head of Engineering.",
+                "tipping_point_to_low": "Senior engineer calls tool 'management spyware' in a team meeting.",
+            },
+            "conversation_starter": "When your eNPS flags burnout, how long does it take to trace it to a specific team's workload?",
+            "deal_breaker": "Any perception of individual performance surveillance — she'll actively block adoption.",
+            "influencers": ["Head of Engineering", "COO", "CEO"],
+            "time_to_close": "2-5 months",
+        },
+    ]
+}
+
+AGENT5_MANDATORY_FIELDS = [
+    "title", "category", "description", "severity", "affected_personas", "mitigation"
+]
+AGENT5_OPTIONAL_FIELDS = ["time_sensitivity", "cost_to_fix", "early_warning_signal"]
+VALID_CATEGORIES = {"Competitive", "Cultural", "Regulatory", "Economic", "Operational"}
+VALID_SEVERITIES = {"Critical", "High", "Medium", "Low"}
+
+
+def check_agent5() -> bool:
+    from backend.agents.obstacle_detector import run
+
+    agent5_input = {
+        "agent1_output": AGENT1_OUTPUT_STUB,
+        "agent2_output": AGENT2_OUTPUT_STUB,
+        "agent3_output": AGENT3_OUTPUT_STUB,
+        "agent4_output": AGENT4_OUTPUT_STUB,
+        "country_code": "BR",
+    }
+
+    print("\n--- Agent 5: Obstacle Detector ---")
+    print("Input: agent1-4 stubs, target=Brazil\n")
+
+    try:
+        result = run(agent5_input)
+    except ValueError as exc:
+        print(f"[FAIL] Validation error: {exc}")
+        return False
+    except Exception as exc:
+        print(f"[FAIL] run() raised {type(exc).__name__}: {exc}")
+        return False
+
+    obstacles = result.get("obstacles", [])
+    errors = []
+
+    if len(obstacles) != 5:
+        errors.append(f"expected 5 obstacles, got {len(obstacles)}")
+
+    for i, obs in enumerate(obstacles):
+        label = f"Obstacle {i+1} ({obs.get('title', '?')})"
+        for field in AGENT5_MANDATORY_FIELDS:
+            if field not in obs:
+                errors.append(f"{label}: missing '{field}'")
+        if obs.get("category") not in VALID_CATEGORIES:
+            errors.append(f"{label}: invalid category '{obs.get('category')}'")
+        if obs.get("severity") not in VALID_SEVERITIES:
+            errors.append(f"{label}: invalid severity '{obs.get('severity')}'")
+        if not isinstance(obs.get("affected_personas"), list):
+            errors.append(f"{label}: 'affected_personas' must be a list")
+
+    if errors:
+        for e in errors:
+            print(f"[FAIL] {e}")
+        return False
+
+    print("Obstacles (mandatory fields):")
+    for i, obs in enumerate(obstacles):
+        print(f"\n  [{i+1}] [{obs.get('severity')}] [{obs.get('category')}] {obs.get('title')}")
+        print(f"       Description: {obs.get('description')}")
+        print(f"       Affected personas: {obs.get('affected_personas')}")
+        print(f"       Mitigation: {obs.get('mitigation')}")
+
+    print("\nObstacles (optional fields):")
+    for i, obs in enumerate(obstacles):
+        print(f"\n  [{i+1}] {obs.get('title')}")
+        for field in AGENT5_OPTIONAL_FIELDS:
+            print(f"       {field}: {obs.get(field)}")
+
+    print("\n[PASS] Agent 5 returned 5 valid obstacles with all mandatory fields.")
+    return True
+
+
 if __name__ == "__main__":
-    results = [check_agent1(), check_agent2(), check_agent3(), check_agent4()]
+    results = [check_agent1(), check_agent2(), check_agent3(), check_agent4(), check_agent5()]
     sys.exit(0 if all(results) else 1)

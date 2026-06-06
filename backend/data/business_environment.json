@@ -1,0 +1,674 @@
+{
+  "Africa East": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Africa West": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Albania": {
+    "cpi": 39,
+    "ease_of_business": 57,
+    "press_freedom": 57,
+    "political_stability": 50
+  },
+  "Algeria": {
+    "cpi": 34,
+    "ease_of_business": 17,
+    "press_freedom": 37,
+    "political_stability": 36
+  },
+  "Andorra": {
+    "cpi": 70,
+    "ease_of_business": 58,
+    "press_freedom": 64,
+    "political_stability": 70
+  },
+  "Arab Countries": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Argentina": {
+    "cpi": 36,
+    "ease_of_business": 34,
+    "press_freedom": 52,
+    "political_stability": 47
+  },
+  "Armenia": {
+    "cpi": 46,
+    "ease_of_business": 76,
+    "press_freedom": 67,
+    "political_stability": 36
+  },
+  "Australia": {
+    "cpi": 76,
+    "ease_of_business": 93,
+    "press_freedom": 75,
+    "political_stability": 66
+  },
+  "Austria": {
+    "cpi": 69,
+    "ease_of_business": 86,
+    "press_freedom": 79,
+    "political_stability": 60
+  },
+  "Azerbaijan": {
+    "cpi": 30,
+    "ease_of_business": 83,
+    "press_freedom": 24,
+    "political_stability": 47
+  },
+  "Bangladesh": {
+    "cpi": 24,
+    "ease_of_business": 12,
+    "press_freedom": 33,
+    "political_stability": 21
+  },
+  "Belarus": {
+    "cpi": 31,
+    "ease_of_business": 75,
+    "press_freedom": 28,
+    "political_stability": 42
+  },
+  "Belgium": {
+    "cpi": 69,
+    "ease_of_business": 76,
+    "press_freedom": 81,
+    "political_stability": 52
+  },
+  "Belgium (French)": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Belgium (Dutch)": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Bosnia": {
+    "cpi": 34,
+    "ease_of_business": 53,
+    "press_freedom": 54,
+    "political_stability": 40
+  },
+  "Brazil": {
+    "cpi": 35,
+    "ease_of_business": 35,
+    "press_freedom": 66,
+    "political_stability": 40
+  },
+  "Bulgaria": {
+    "cpi": 40,
+    "ease_of_business": 68,
+    "press_freedom": 60,
+    "political_stability": 51
+  },
+  "Burkina Faso": {
+    "cpi": 40,
+    "ease_of_business": 21,
+    "press_freedom": 49,
+    "political_stability": 12
+  },
+  "Canada": {
+    "cpi": 75,
+    "ease_of_business": 88,
+    "press_freedom": 79,
+    "political_stability": 62
+  },
+  "Canada (French)": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Chile": {
+    "cpi": 63,
+    "ease_of_business": 69,
+    "press_freedom": 61,
+    "political_stability": 52
+  },
+  "China": {
+    "cpi": 43,
+    "ease_of_business": 84,
+    "press_freedom": 14,
+    "political_stability": 47
+  },
+  "Colombia": {
+    "cpi": 37,
+    "ease_of_business": 65,
+    "press_freedom": 52,
+    "political_stability": 31
+  },
+  "Costa Rica": {
+    "cpi": 56,
+    "ease_of_business": 62,
+    "press_freedom": 72,
+    "political_stability": 74
+  },
+  "Croatia": {
+    "cpi": 47,
+    "ease_of_business": 74,
+    "press_freedom": 66,
+    "political_stability": 62
+  },
+  "Cyprus": {
+    "cpi": 55,
+    "ease_of_business": 72,
+    "press_freedom": 57,
+    "political_stability": 58
+  },
+  "Czech Republic": {
+    "cpi": 59,
+    "ease_of_business": 79,
+    "press_freedom": 83,
+    "political_stability": 69
+  },
+  "Denmark": {
+    "cpi": 89,
+    "ease_of_business": 98,
+    "press_freedom": 88,
+    "political_stability": 65
+  },
+  "Dominican Republic": {
+    "cpi": 37,
+    "ease_of_business": 40,
+    "press_freedom": 70,
+    "political_stability": 62
+  },
+  "Ecuador": {
+    "cpi": 33,
+    "ease_of_business": 33,
+    "press_freedom": 44,
+    "political_stability": 36
+  },
+  "Egypt": {
+    "cpi": 30,
+    "ease_of_business": 41,
+    "press_freedom": 25,
+    "political_stability": 30
+  },
+  "Ethiopia": {
+    "cpi": 38,
+    "ease_of_business": 16,
+    "press_freedom": 35,
+    "political_stability": 12
+  },
+  "El Salvador": {
+    "cpi": 32,
+    "ease_of_business": 53,
+    "press_freedom": 39,
+    "political_stability": 50
+  },
+  "Estonia": {
+    "cpi": 76,
+    "ease_of_business": 91,
+    "press_freedom": 89,
+    "political_stability": 64
+  },
+  "Finland": {
+    "cpi": 88,
+    "ease_of_business": 90,
+    "press_freedom": 86,
+    "political_stability": 67
+  },
+  "France": {
+    "cpi": 66,
+    "ease_of_business": 84,
+    "press_freedom": 77,
+    "political_stability": 45
+  },
+  "Georgia": {
+    "cpi": 50,
+    "ease_of_business": 97,
+    "press_freedom": 41,
+    "political_stability": 38
+  },
+  "Germany": {
+    "cpi": 77,
+    "ease_of_business": 89,
+    "press_freedom": 82,
+    "political_stability": 52
+  },
+  "Germany (East)": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Ghana": {
+    "cpi": 43,
+    "ease_of_business": 38,
+    "press_freedom": 72,
+    "political_stability": 50
+  },
+  "United Kingdom": {
+    "cpi": 70,
+    "ease_of_business": 96,
+    "press_freedom": 79,
+    "political_stability": 55
+  },
+  "Greece": {
+    "cpi": 50,
+    "ease_of_business": 59,
+    "press_freedom": 55,
+    "political_stability": 53
+  },
+  "Guatemala": {
+    "cpi": 26,
+    "ease_of_business": 50,
+    "press_freedom": 43,
+    "political_stability": 46
+  },
+  "Hong Kong": {
+    "cpi": 76,
+    "ease_of_business": 99,
+    "press_freedom": 39,
+    "political_stability": 63
+  },
+  "Hungary": {
+    "cpi": 40,
+    "ease_of_business": 73,
+    "press_freedom": 60,
+    "political_stability": 59
+  },
+  "Iceland": {
+    "cpi": 77,
+    "ease_of_business": 87,
+    "press_freedom": 83,
+    "political_stability": 74
+  },
+  "India": {
+    "cpi": 39,
+    "ease_of_business": 67,
+    "press_freedom": 32,
+    "political_stability": 34
+  },
+  "Indonesia": {
+    "cpi": 34,
+    "ease_of_business": 62,
+    "press_freedom": 43,
+    "political_stability": 38
+  },
+  "Iran": {
+    "cpi": 23,
+    "ease_of_business": 34,
+    "press_freedom": 17,
+    "political_stability": 18
+  },
+  "Iraq": {
+    "cpi": 28,
+    "ease_of_business": 10,
+    "press_freedom": 29,
+    "political_stability": 9
+  },
+  "Ireland": {
+    "cpi": 76,
+    "ease_of_business": 88,
+    "press_freedom": 86,
+    "political_stability": 64
+  },
+  "Israel": {
+    "cpi": 62,
+    "ease_of_business": 82,
+    "press_freedom": 46,
+    "political_stability": 29
+  },
+  "Italy": {
+    "cpi": 53,
+    "ease_of_business": 70,
+    "press_freedom": 65,
+    "political_stability": 56
+  },
+  "Jamaica": {
+    "cpi": 44,
+    "ease_of_business": 63,
+    "press_freedom": 76,
+    "political_stability": 60
+  },
+  "Japan": {
+    "cpi": 71,
+    "ease_of_business": 85,
+    "press_freedom": 63,
+    "political_stability": 73
+  },
+  "Jordan": {
+    "cpi": 50,
+    "ease_of_business": 61,
+    "press_freedom": 39,
+    "political_stability": 43
+  },
+  "South Korea": {
+    "cpi": 63,
+    "ease_of_business": 98,
+    "press_freedom": 69,
+    "political_stability": 63
+  },
+  "Kyrgyz Republic": {
+    "cpi": 26,
+    "ease_of_business": 58,
+    "press_freedom": 35,
+    "political_stability": 40
+  },
+  "Latvia": {
+    "cpi": 60,
+    "ease_of_business": 91,
+    "press_freedom": 81,
+    "political_stability": 62
+  },
+  "Lithuania": {
+    "cpi": 65,
+    "ease_of_business": 95,
+    "press_freedom": 81,
+    "political_stability": 69
+  },
+  "Luxembourg": {
+    "cpi": 78,
+    "ease_of_business": 63,
+    "press_freedom": 84,
+    "political_stability": 71
+  },
+  "Macedonia": {
+    "cpi": 40,
+    "ease_of_business": 92,
+    "press_freedom": 69,
+    "political_stability": 53
+  },
+  "Malaysia": {
+    "cpi": 52,
+    "ease_of_business": 94,
+    "press_freedom": 53,
+    "political_stability": 58
+  },
+  "Mali": {
+    "cpi": 28,
+    "ease_of_business": 22,
+    "press_freedom": 46,
+    "political_stability": 0
+  },
+  "Malta": {
+    "cpi": 49,
+    "ease_of_business": 54,
+    "press_freedom": 61,
+    "political_stability": 66
+  },
+  "Mexico": {
+    "cpi": 27,
+    "ease_of_business": 69,
+    "press_freedom": 45,
+    "political_stability": 36
+  },
+  "Moldova": {
+    "cpi": 42,
+    "ease_of_business": 75,
+    "press_freedom": 75,
+    "political_stability": 43
+  },
+  "Montenegro": {
+    "cpi": 46,
+    "ease_of_business": 74,
+    "press_freedom": 72,
+    "political_stability": 57
+  },
+  "Morocco": {
+    "cpi": 39,
+    "ease_of_business": 73,
+    "press_freedom": 51,
+    "political_stability": 41
+  },
+  "Netherlands": {
+    "cpi": 78,
+    "ease_of_business": 78,
+    "press_freedom": 89,
+    "political_stability": 59
+  },
+  "New Zealand": {
+    "cpi": 81,
+    "ease_of_business": 100,
+    "press_freedom": 77,
+    "political_stability": 73
+  },
+  "Nigeria": {
+    "cpi": 26,
+    "ease_of_business": 32,
+    "press_freedom": 48,
+    "political_stability": 10
+  },
+  "Norway": {
+    "cpi": 81,
+    "ease_of_business": 96,
+    "press_freedom": 93,
+    "political_stability": 68
+  },
+  "Pakistan": {
+    "cpi": 28,
+    "ease_of_business": 44,
+    "press_freedom": 33,
+    "political_stability": 9
+  },
+  "Panama": {
+    "cpi": 33,
+    "ease_of_business": 55,
+    "press_freedom": 62,
+    "political_stability": 55
+  },
+  "Peru": {
+    "cpi": 30,
+    "ease_of_business": 61,
+    "press_freedom": 38,
+    "political_stability": 37
+  },
+  "Philippines": {
+    "cpi": 32,
+    "ease_of_business": 51,
+    "press_freedom": 47,
+    "political_stability": 35
+  },
+  "Poland": {
+    "cpi": 52,
+    "ease_of_business": 79,
+    "press_freedom": 76,
+    "political_stability": 60
+  },
+  "Portugal": {
+    "cpi": 56,
+    "ease_of_business": 80,
+    "press_freedom": 84,
+    "political_stability": 61
+  },
+  "Puerto Rico": {
+    "cpi": 64,
+    "ease_of_business": 66,
+    "press_freedom": 63,
+    "political_stability": 59
+  },
+  "Romania": {
+    "cpi": 45,
+    "ease_of_business": 72,
+    "press_freedom": 68,
+    "political_stability": 53
+  },
+  "Russia": {
+    "cpi": 22,
+    "ease_of_business": 86,
+    "press_freedom": 23,
+    "political_stability": 32
+  },
+  "Rwanda": {
+    "cpi": 58,
+    "ease_of_business": 81,
+    "press_freedom": 40,
+    "political_stability": 49
+  },
+  "Saudi Arabia": {
+    "cpi": 57,
+    "ease_of_business": 68,
+    "press_freedom": 19,
+    "political_stability": 49
+  },
+  "Serbia": {
+    "cpi": 33,
+    "ease_of_business": 77,
+    "press_freedom": 51,
+    "political_stability": 47
+  },
+  "Singapore": {
+    "cpi": 84,
+    "ease_of_business": 99,
+    "press_freedom": 45,
+    "political_stability": 75
+  },
+  "Slovakia": {
+    "cpi": 48,
+    "ease_of_business": 77,
+    "press_freedom": 73,
+    "political_stability": 63
+  },
+  "Slovenia": {
+    "cpi": 58,
+    "ease_of_business": 81,
+    "press_freedom": 73,
+    "political_stability": 64
+  },
+  "South Africa": {
+    "cpi": 41,
+    "ease_of_business": 56,
+    "press_freedom": 78,
+    "political_stability": 38
+  },
+  "South Africa (White)": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Spain": {
+    "cpi": 55,
+    "ease_of_business": 85,
+    "press_freedom": 75,
+    "political_stability": 50
+  },
+  "Suriname": {
+    "cpi": 38,
+    "ease_of_business": 15,
+    "press_freedom": 73,
+    "political_stability": 60
+  },
+  "Sweden": {
+    "cpi": 80,
+    "ease_of_business": 95,
+    "press_freedom": 88,
+    "political_stability": 62
+  },
+  "Switzerland": {
+    "cpi": 80,
+    "ease_of_business": 82,
+    "press_freedom": 85,
+    "political_stability": 70
+  },
+  "Switzerland (French)": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Switzerland (German)": {
+    "cpi": null,
+    "ease_of_business": null,
+    "press_freedom": null,
+    "political_stability": null
+  },
+  "Taiwan": {
+    "cpi": 68,
+    "ease_of_business": 93,
+    "press_freedom": 75,
+    "political_stability": 68
+  },
+  "Tanzania": {
+    "cpi": 40,
+    "ease_of_business": 26,
+    "press_freedom": 46,
+    "political_stability": 42
+  },
+  "Thailand": {
+    "cpi": 33,
+    "ease_of_business": 89,
+    "press_freedom": 54,
+    "political_stability": 36
+  },
+  "Trinidad and Tobago": {
+    "cpi": 41,
+    "ease_of_business": 45,
+    "press_freedom": 75,
+    "political_stability": 57
+  },
+  "Turkey": {
+    "cpi": 31,
+    "ease_of_business": 83,
+    "press_freedom": 28,
+    "political_stability": 31
+  },
+  "United States": {
+    "cpi": 64,
+    "ease_of_business": 97,
+    "press_freedom": 63,
+    "political_stability": 48
+  },
+  "Uganda": {
+    "cpi": 25,
+    "ease_of_business": 39,
+    "press_freedom": 42,
+    "political_stability": 30
+  },
+  "Ukraine": {
+    "cpi": 36,
+    "ease_of_business": 67,
+    "press_freedom": 66,
+    "political_stability": 41
+  },
+  "Uruguay": {
+    "cpi": 73,
+    "ease_of_business": 47,
+    "press_freedom": 69,
+    "political_stability": 76
+  },
+  "Venezuela": {
+    "cpi": 10,
+    "ease_of_business": 2,
+    "press_freedom": 30,
+    "political_stability": 15
+  },
+  "Vietnam": {
+    "cpi": 41,
+    "ease_of_business": 64,
+    "press_freedom": 21,
+    "political_stability": 50
+  },
+  "Zambia": {
+    "cpi": 37,
+    "ease_of_business": 56,
+    "press_freedom": 59,
+    "political_stability": 48
+  },
+  "Zimbabwe": {
+    "cpi": 22,
+    "ease_of_business": 27,
+    "press_freedom": 44,
+    "political_stability": 30
+  },
+  "Kenya": {
+    "cpi": 30,
+    "ease_of_business": 71,
+    "press_freedom": 51,
+    "political_stability": 23
+  }
+}
