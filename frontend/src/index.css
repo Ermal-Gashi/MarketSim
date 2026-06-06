@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Agent pill running pulse */
+@keyframes pill-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* Thinking dot staggered pulse */
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1); }
+}
+
 /* Run Simulation button — corner accent on hover */
 .btn-run {
   position: relative;

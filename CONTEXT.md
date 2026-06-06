@@ -23,11 +23,13 @@ MarketSim does what a user cannot do by asking Claude directly. Native Claude ha
 | Backend | Python + FastAPI |
 | AI Model | `claude-sonnet-4-6` |
 | Streaming | Server-Sent Events (SSE) via GET params |
-| Frontend | HTML/CSS/JS — decided, vanilla no framework |
+| Frontend | React + Vite + Tailwind CSS + D3 + Recharts + Framer Motion |
+| Theme | Light mode default, dark mode toggle — theme system built in theme.js |
 | Repo | Single monorepo, one folder |
 | Environment | PyCharm on Windows, PowerShell terminal |
 | Project path | `C:\Users\korab\PycharmProjects\MarketSim` |
 | Agent 7 | Pure Python simulation layer — no Claude call |
+| Agent timeouts | 300 seconds for all agents |
 
 ---
 
@@ -40,32 +42,54 @@ marketsim/
 ├── README.md
 ├── .env                               # ANTHROPIC_API_KEY
 ├── .gitignore
-├── main.py                            # FastAPI entry point
+├── main.py                            # FastAPI entry point ✅
 │
 ├── backend/
 │   ├── requirements.txt
 │   ├── routes/
-│   │   └── simulate.py                # SSE streaming endpoint — not yet wired
+│   │   └── simulate.py                # SSE streaming endpoint ✅ wired and tested
 │   ├── agents/
 │   │   ├── product_analyst.py         # Agent 1 ✅
 │   │   ├── market_data_fetcher.py     # Agent 2 ✅
 │   │   ├── cultural_fit_scorer.py     # Agent 3 ✅
-│   │   ├── persona_generator.py       # Agent 4 ✅
+│   │   ├── persona_generator.py       # Agent 4 ✅ max_tokens=4000
 │   │   ├── obstacle_detector.py       # Agent 5 ✅
-│   │   ├── synthesizer.py             # Agent 6 ✅
-│   │   └── simulation_layer.py        # Agent 7 — planned, not built yet
+│   │   ├── synthesizer.py             # Agent 6 ✅ max_tokens=4000
+│   │   └── simulation_layer.py        # Agent 7 ✅ pure Python no Claude call
 │   ├── services/
-│   │   ├── claude_client.py           # All Claude calls go through here
-│   │   ├── world_bank_client.py       # World Bank API + household consumption
-│   │   └── countries_client.py        # REST Countries API wrapper
+│   │   ├── claude_client.py           # All Claude calls go through here ✅
+│   │   ├── world_bank_client.py       # World Bank API + household consumption ✅
+│   │   └── countries_client.py        # REST Countries API wrapper ✅
+│   ├── tests/
+│   │   ├── test_services.py           # Service tests ✅
+│   │   ├── test_agents.py             # Agent tests ✅
+│   │   └── test_pipeline.py           # Full SSE pipeline test ✅ all 7 checks passing
 │   └── data/
-│       ├── hofstede.json              # Hofstede cultural dimensions — 112 countries
-│       └── business_environment.json  # CPI, Ease of Business, Press Freedom, Political Stability — 102 countries
+│       ├── hofstede.json              # Hofstede cultural dimensions — 112 countries ✅
+│       └── business_environment.json  # CPI, Ease of Business, Press Freedom, Political Stability ✅
 │
-├── frontend/                          # Not built yet — Milestone 2
-└── backend/tests/
-    ├── test_services.py               # Tests for all services ✅
-    └── test_agents.py                 # Tests for all agents ✅
+└── frontend/                          # React + Vite app — Milestone 2 in progress
+    ├── index.html
+    ├── vite.config.js                 # Proxy /api → localhost:8000 ✅
+    ├── package.json
+    ├── tailwind.config.js
+    └── src/
+        ├── main.jsx                   # ✅
+        ├── App.jsx                    # ✅ theme toggle, grid background, Framer Motion fade
+        ├── theme.js                   # ✅ full dark/light theme object
+        ├── index.css                  # ✅ Tailwind directives
+        ├── hooks/
+        │   └── useSimulation.js       # ✅ SSE connection, agentStatuses, isComplete, completeReport
+        └── components/
+            ├── InputForm.jsx          # ✅ Section 1 complete — light/dark themed
+            ├── AgentProgressBar.jsx   # 🔲 Section 2 — next to build
+            ├── AgentNetworkModal.jsx  # 🔲 Section 2 — next to build
+            ├── HeroMap.jsx            # 🔲 Section 3
+            ├── RadarChart.jsx         # 🔲 Section 3
+            ├── PersonaCards.jsx       # 🔲 Section 4
+            ├── ObstacleMatrix.jsx     # 🔲 Section 5
+            ├── EntryRoadmap.jsx       # 🔲 Section 6
+            └── VerdictSummary.jsx     # 🔲 Section 7
 ```
 
 ---
@@ -74,15 +98,38 @@ marketsim/
 
 | # | Agent | Key Output | Status |
 |---|-------|-----------|--------|
-| 1 | Product Analyst | Value props, pricing tier, customer profile, optional enrichments | ✅ Complete |
-| 2 | Market Data Fetcher | GDP, internet penetration, competitors, infrastructure, regional breakdown | ✅ Complete |
-| 3 | Cultural Fit Scorer | Fit score 0-100, Hofstede dimension analysis, sales motion recommendation | ✅ Complete |
-| 4 | Persona Generator | 5 archetypes with variance profiles for simulation layer | ✅ Complete |
-| 5 | Obstacle Detector | 5 obstacles ordered by severity, business environment data grounded | ✅ Complete |
-| 6 | Synthesizer | Go/Cautious Go/No-Go verdict, regional_weights, dot_intensity, radar_scores | ✅ Complete |
-| 7 | Simulation Layer | 200 synthetic persona instances with conversion outcomes — pure Python, no Claude | 🔲 Planned |
+| 1 | Product Analyst | Value props, pricing tier, customer profile, optional enrichments | ✅ |
+| 2 | Market Data Fetcher | GDP, internet penetration, competitors, infrastructure, regional breakdown | ✅ |
+| 3 | Cultural Fit Scorer | Fit score 0-100, Hofstede dimension analysis, sales motion recommendation | ✅ |
+| 4 | Persona Generator | 5 archetypes with variance profiles — max_tokens=4000 | ✅ |
+| 5 | Obstacle Detector | 5 obstacles ordered by severity, business environment data grounded | ✅ |
+| 6 | Synthesizer | Go/Cautious Go/No-Go verdict, regional_weights, dot_intensity, radar_scores | ✅ |
+| 7 | Simulation Layer | 200 synthetic persona instances with conversion outcomes — pure Python | ✅ |
 
-All agents 1-6 return structured JSON. All Claude calls route through `claude_client.py`. No agent has persistent memory — context passed explicitly each call. Agent 7 uses no Claude call — pure Python logic rolling archetype variance profiles.
+All agents return structured JSON. All Claude calls route through `claude_client.py`. No persistent memory — context passed explicitly. Agent 7 is pure Python — no Claude call.
+
+---
+
+## SSE Pipeline
+- Endpoint: `GET /api/simulate`
+- Query params: `product_description`, `current_market`, `target_market`
+- All agent timeouts: 300 seconds
+- CORS enabled for all origins
+- Full pipeline test passing — all 7 checks green
+- Final event contains `complete_report` with all agent outputs
+
+---
+
+## Theme System
+- `frontend/src/theme.js` contains `themes.dark` and `themes.light`
+- `App.jsx` holds `isDark` state, derives `theme = isDark ? themes.dark : themes.light`
+- Theme toggle button fixed top-right — sun icon in dark mode, moon in light mode
+- Every component receives `theme` as a prop and uses `theme.*` values for all colors
+- Light mode is the default
+- Key colors:
+  - Accent teal (agents done): `#4DBBAA`
+  - Accent wine red (button corners, errors): `#8B3A52`
+  - These two accents are identical in both light and dark modes
 
 ---
 
@@ -95,49 +142,72 @@ All agents 1-6 return structured JSON. All Claude calls route through `claude_cl
 | hofstede.json | Cultural dimension scores (PDI, IDV, MAS, UAI, LTO, IVR) | 112 countries |
 | business_environment.json | CPI, Ease of Doing Business, Press Freedom, Political Stability | 102 countries |
 
-Fallback: if APIs return no data, Claude estimates and flags with `data_source: "estimated"`.
+---
+
+## Frontend — Section 1 Complete ✅
+
+Input form with:
+- Engineering grid background (light: warm off-white + gray grid, dark: near-black + dark grid)
+- Form card with full border rectangle + subtle shadow in light mode
+- Run Simulation button with wine red corner-only L-shaped lines
+- Collapsible "How to get the best results" helper section
+- Character counter on textarea
+- Pulse animation on button when all fields filled
+- Framer Motion fade transition when simulation starts
+- Theme toggle button top-right
 
 ---
 
-## Frontend Visual Design Decisions
+## Frontend — Section 2 Plan (next to build)
 
-### Screen 1 — Input Form
-- Product description text area
-- Current market input
-- Target market input
-- Run Simulation button
+**Top bar** — slim persistent bar at top of page:
+- Left: MarketSim wordmark
+- Center: 7 green pill indicators lighting up one by one as agents complete
+- Right: "View network" button
 
-### Screen 2 — Agent Progress
-- Horizontal strip at top of page showing 7 agent pills lighting up as each completes
-- "View agent network" button that opens a modal
-- Modal shows semi-transparent neural network of all 7 agents in a circle
-- Animated data packets travel between completed agents in the modal
-- Report fades in below the strip as agents complete
+**Center of page** — large expressive agent status while simulation runs:
+- Big evocative name e.g. "Reading the cultural landscape" (not the technical agent name)
+- Subtitle describing what is happening right now
+- Animated thinking indicator below
 
-### Screen 3 — Report
-Two hero visuals:
-1. **Animated country dot map** — country silhouette dynamically rendered based on user input. Dots spawn gradually in correct regional distribution from Agent 6 regional_weights. Dots represent synthetic instances of the 5 persona archetypes (Option 1 — honest simulation). High likelihood zones pulse brighter and denser. Dots fade to show abandonment. Verdict overlaid as transparent rectangle with colored corners only (not filled) — green/amber/red corners with single word GO / CAUTION / NO-GO visible through transparent center.
-2. **Signal radar chart** — hexagonal spider chart showing 6 key market signals from Agent 6 radar_scores.
+**Evocative agent names (center display):**
+1. Product Analyst → "Decoding your product DNA"
+2. Market Data Fetcher → "Pulling live market intelligence"
+3. Cultural Fit Scorer → "Reading the cultural landscape"
+4. Persona Generator → "Building your buyer archetypes"
+5. Obstacle Detector → "Stress testing the entry path"
+6. Synthesizer → "Weighing all the signals"
+7. Simulation Layer → "Simulating 200 potential customers"
 
-Remaining sections (to be designed during Milestone 2):
-- Persona archetype cards (tappable, flip to variance profile)
-- Obstacle matrix (severity vs time sensitivity scatter plot)
-- Market entry roadmap (phased horizontal timeline)
-- Critical assumptions
-- Recommended first move + wildcard + revisit trigger
+**Agent Network Modal:**
+- Opens when "View network" button clicked
+- Semi-transparent dark overlay (same in both light and dark mode)
+- 7 agent nodes in a circle
+- Agents light up sequentially as SSE events arrive
+- Completed agents send animated light pulses to neighboring nodes
+- When all done all connections are fully lit
+- Close by clicking outside or X button
+
+**Transition to report:**
+- When isComplete=true: status text fades out
+- Report sections fade in one by one on the same grid background
 
 ---
 
-## Agent 7 — Simulation Layer Design
+## Frontend — Section 3-7 Plan (after Section 2)
 
-Agent 7 is pure Python — no Claude API call. It:
-- Takes 5 persona archetypes from Agent 4 with their variance_profile objects
-- Takes regional_weights and dot_intensity from Agent 6
-- Generates ~200 synthetic instances by rolling key_variables randomly per instance
-- Assigns each instance: archetype, city (weighted by regional_weights), conversion outcome (converted/evaluating/abandoned) based on tipping_point conditions
-- Output feeds the frontend dot map animation
+**Section 3 — Hero Visuals (two side by side):**
+- Left: Animated country dot map (D3) — country silhouette, 200 dots from Agent 7, spawn by spawn_delay_ms, color by conversion_outcome, verdict overlay as corner-only rectangle
+- Right: Signal radar chart (Recharts) — 6 axes from Agent 6 radar_scores
+- Dot popup on click: avatar silhouette, display_name, job_title, outcome_reason, deciding_factor
 
-This is not random dot generation — every dot is a rolled variant of a real archetype with documented variance. Defensible methodology.
+**Section 4 — Persona Cards:** 5 flippable cards, front shows archetype info, back shows variance profile
+
+**Section 5 — Obstacle Matrix:** Scatter plot severity vs time sensitivity
+
+**Section 6 — Entry Roadmap:** Phased horizontal timeline from Agent 6 market_entry_sequence
+
+**Section 7 — Verdict Summary:** Critical assumptions, recommended first move, wildcard, revisit trigger
 
 ---
 
@@ -145,22 +215,10 @@ This is not random dot generation — every dot is a rolled variant of a real ar
 
 | Milestone | Status | Goal |
 |-----------|--------|------|
-| 0 — Setup | ✅ Complete | FastAPI runs, all APIs respond, Claude client working |
-| 1 — Agent Pipeline | 🔄 In Progress | Agents 1-6 complete and tested. SSE pipeline wiring remaining. Agent 7 planned. |
-| 2 — Frontend | 🔲 Not started | HTML/CSS/JS frontend with dot map, radar chart, agent network modal |
-| 3 — Polish & Deploy | 🔲 Not started | Live URL, tested, demo ready in under 90 seconds |
-
----
-
-## Next Steps (in order)
-
-1. Wire all 6 agents into `simulate.py` SSE pipeline — completes Milestone 1
-2. Build Agent 7 simulation layer — pure Python
-3. Begin Milestone 2 frontend build
-4. Design and build dot map hero visual
-5. Design and build radar chart hero visual
-6. Build agent network modal
-7. Connect frontend to backend SSE
+| 0 — Setup | ✅ Complete | FastAPI, all APIs, Claude client |
+| 1 — Agent Pipeline + SSE | ✅ Complete | All 7 agents, pipeline wired, tests passing |
+| 2 — Frontend | 🔄 In Progress | Section 1 done. Section 2 next. |
+| 3 — Polish & Deploy | 🔲 Not started | Live URL, tested, demo ready |
 
 ---
 
@@ -171,24 +229,19 @@ This is not random dot generation — every dot is a rolled variant of a real ar
 | **Does** | Writes and edits code | Plans, advises, reviews, writes prompts |
 | **Knows** | CLAUDE.md | This file (CONTEXT.md) |
 | **Gets** | Specific build instructions | Strategic and architectural questions |
-| **Don't ask it** | What to build or why | To write files directly into the repo |
 
 ---
 
 ## How to Use This File
 
-Paste the following at the start of a new Claude chat when you need to pick up where we left off:
-
+Paste at the start of a new Claude chat:
 > "Here is my project context, please read it before we continue: [paste CONTEXT.md contents]"
-
-Update this file whenever a major decision is made or a milestone is completed.
 
 ---
 
 ## Things We Are NOT Building
-
 - User authentication
 - Saved simulation history
 - Mobile responsive design
 - More than 7 agents
-- Any feature not already listed in CLAUDE.md or this file
+- Any feature not listed in CLAUDE.md or this file

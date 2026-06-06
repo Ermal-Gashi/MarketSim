@@ -62,28 +62,31 @@ marketsim/
 │       ├── hofstede.json              # Hofstede cultural dimensions — 112 countries ✅
 │       └── business_environment.json  # CPI, Ease of Business, Press Freedom, Political Stability ✅
 │
-└── frontend/                          # React + Vite app — Milestone 2
+└── frontend/                          # React + Vite app — Milestone 2 in progress
     ├── index.html
     ├── vite.config.js
     ├── package.json
     ├── tailwind.config.js
     └── src/
         ├── main.jsx
-        ├── App.jsx
-        ├── components/
-        │   ├── InputForm.jsx           # Section 1
-        │   ├── AgentProgressBar.jsx    # Section 2 — top strip
-        │   ├── AgentNetworkModal.jsx   # Section 2 — neural network modal
-        │   ├── HeroMap.jsx             # Section 3 — animated country dot map
-        │   ├── RadarChart.jsx          # Section 3 — signal radar chart
-        │   ├── PersonaCards.jsx        # Section 4 — flippable persona cards
-        │   ├── ObstacleMatrix.jsx      # Section 5 — severity scatter plot
-        │   ├── EntryRoadmap.jsx        # Section 6 — phased timeline
-        │   └── VerdictSummary.jsx      # Section 7 — assumptions + first move
+        ├── App.jsx                    # Theme toggle, grid background, section routing ✅
+        ├── theme.js                   # Full dark/light theme object ✅
+        ├── index.css
         ├── hooks/
-        │   └── useSimulation.js        # SSE connection + state management
-        └── styles/
-            └── index.css
+        │   └── useSimulation.js       # SSE connection + state management ✅
+        └── components/
+            ├── InputForm.jsx          # Section 1 ✅ complete
+            ├── AgentProgressBar.jsx   # Section 2 ✅ complete
+            ├── AgentNetworkModal.jsx  # Section 2 ✅ complete
+            ├── ReportDashboard.jsx    # Section 3 — main report container 🔲
+            ├── HeroMap.jsx            # Row 1 center — animated country dot map 🔲
+            ├── PersonaCards.jsx       # Row 1 left — 5 persona cards 🔲
+            ├── ObstacleCards.jsx      # Row 1 right — 5 obstacle cards 🔲
+            ├── RadarChart.jsx         # Row 2 center — signal radar 🔲
+            ├── MarketStats.jsx        # Row 2 left — market snapshot stats 🔲
+            ├── CulturalFit.jsx        # Row 2 right — cultural fit + Hofstede bars 🔲
+            ├── EntryRoadmap.jsx       # Row 3 — phased timeline full width 🔲
+            └── BottomStrip.jsx        # Row 4 — exec summary + first move + competitors 🔲
 ```
 
 ---
@@ -100,11 +103,9 @@ ANTHROPIC_API_KEY=your_key_here
 
 ## Agent Pipeline — All Complete ✅
 
-Agents run sequentially. Each agent receives all previous agent outputs as context. No persistent memory — all context passed explicitly per call. All agents return structured JSON.
-
 | # | Agent | Input | Output | Status |
 |---|-------|-------|--------|--------|
-| 1 | Product Analyst | Product description + current market | Value props, pricing tier, customer profile, optional enrichments | ✅ |
+| 1 | Product Analyst | Product description + current market | Value props, pricing tier, customer profile | ✅ |
 | 2 | Market Data Fetcher | Target market + Agent 1 | GDP, penetration, competitors, infrastructure, regional breakdown | ✅ |
 | 3 | Cultural Fit Scorer | Agent 1 + 2 + Hofstede data | Fit score 0-100, dimension analysis, sales motion recommendation | ✅ |
 | 4 | Persona Generator | Agent 1 + 2 + 3 | 5 archetypes with variance profiles — max_tokens=4000 | ✅ |
@@ -124,7 +125,7 @@ Agent 7 is pure Python — no Claude API call. It takes the 5 persona archetypes
 
 Endpoint: `GET /api/simulate`
 Query params: `product_description`, `current_market`, `target_market`
-All agent timeouts: 300 seconds
+All agent timeouts: 600 seconds
 CORS: enabled for all origins
 
 Event format:
@@ -135,6 +136,119 @@ data: {"agent": 7, "name": "Simulation Layer", "status": "done", "output": {...}
 ```
 
 Final event `complete_report` contains: product_description, current_market, target_market, agent1_output through agent7_output.
+
+---
+
+## Theme System ✅
+
+- `frontend/src/theme.js` contains `themes.dark` and `themes.light`
+- `App.jsx` holds `isDark` state, derives `theme = isDark ? themes.dark : themes.light`
+- Theme toggle button fixed top-right always visible — sun icon in dark mode, moon in light mode
+- Light mode is the default
+- Every component receives `theme` as a prop
+- Key accent colors:
+  - `theme.accentActive` — teal `#4DBBAA` in dark mode, burgundy `#8B3A52` in light mode
+  - `theme.accentWine` — `#8B3A52` in both modes (errors, cancel button hover)
+  - `theme.bgBar` — `rgba(8,8,11,0.96)` dark, `rgba(244,244,240,0.96)` light
+
+---
+
+## Report Dashboard Layout — Section 3 🔲
+
+The report fades in after simulation completes. It is a single scrollable page with 4 rows. All data comes from `completeReport` passed as a prop.
+
+### Row 1 — Hero (three columns, same height)
+```
+┌──────────────┬─────────────────────┬──────────────┐
+│  PERSONAS    │   VERDICT STAMP     │  OBSTACLES   │
+│  (25% width) │   + Country map     │  (25% width) │
+│              │   (50% width)       │              │
+│  5 stacked   │   dots animating    │  5 stacked   │
+│  mini cards  │   from Agent 7      │  mini cards  │
+│              │                     │              │
+│  Click to    │   Verdict overlay:  │  Color coded │
+│  expand full │   corner-only rect  │  by severity │
+│  detail      │   GO/CAUTION/NO-GO  │              │
+└──────────────┴─────────────────────┴──────────────┘
+```
+
+**Center column — HeroMap.jsx:**
+- Verdict stamp centered above the map — large bold text (GO / CAUTIOUS GO / NO-GO) inside a transparent rectangle with thick colored corner lines only. Green=Go, Amber=Cautious Go, Red=No-Go. No filled background — just the corners drawn.
+- D3 country silhouette below the stamp, rendered from GeoJSON
+- 200 dots spawning gradually using spawn_delay_ms from Agent 7 instances
+- Dot colors: converted=`#4DBBAA` teal, evaluating=amber, abandoned=dim red
+- Clicking a dot shows popup: avatar silhouette, display_name, job_title, outcome_reason, deciding_factor
+
+**Left column — PersonaCards.jsx:**
+- 5 mini cards stacked vertically
+- Each shows: initials circle, name+age, job title (truncated), city, likelihood badge
+- Likelihood badge colors: High=`theme.accentActive`, Medium=amber, Low=wine red
+- Click to expand full detail overlay showing full persona info and variance profile
+
+**Right column — ObstacleCards.jsx:**
+- 5 mini cards stacked vertically
+- Each shows: severity badge, obstacle title, one-line description
+- Severity colors: Critical=red, High=orange, Medium=amber, Low=green
+- Click to expand showing full description and mitigation
+
+---
+
+### Row 2 — Analytics (three columns, same height)
+```
+┌──────────────┬─────────────────────┬──────────────┐
+│  MARKET DATA │   SIGNAL RADAR      │ CULTURAL FIT │
+│  (25% width) │   (50% width)       │ (25% width)  │
+│              │                     │              │
+│  GDP         │   6-axis spider     │ Score number │
+│  Internet %  │   chart from        │ + label      │
+│  Population  │   Agent 6           │ + 6 Hofstede │
+│  Maturity    │   radar_scores      │ dimension    │
+│  Trend arrow │                     │ bars         │
+└──────────────┴─────────────────────┴──────────────┘
+```
+
+**Left column — MarketStats.jsx:**
+Data from agent2_output: gdp_per_capita_usd, internet_penetration_pct, population, market_maturity, market_trend
+Show as clean stat rows with label + value + trend indicator
+
+**Center column — RadarChart.jsx:**
+- Recharts RadarChart
+- 6 axes from agent6_output.radar_scores: Market growth, Cultural fit, Internet penetration, Political stability, Ease of business, Corruption index
+- Filled polygon in theme.accentActive color at 30% opacity
+- Dashed outline showing ideal score (80 on all axes) in theme.borderStrong
+- Score labels on each axis
+
+**Right column — CulturalFit.jsx:**
+- Large score number (e.g. 52) with score_label below it (e.g. "Moderate Fit")
+- 6 horizontal bars for each Hofstede dimension from agent3_output.dimension_analysis
+- Each bar shows: dimension name, score number, filled bar proportional to score
+- Bar color matches score: above 70=warm, 40-70=neutral, below 40=cool
+
+---
+
+### Row 3 — Entry Roadmap (full width)
+```
+[ Phase 1 ] ──→ [ Phase 2 ] ──→ [ Phase 3 ] ──→ [ Phase 4 ]
+```
+- Data from agent6_output.market_entry_sequence
+- Each phase: number circle, phase_name, timeframe, list of actions
+- Connected by a line that progresses from red (urgent/legal) to green (scale)
+- Animate left to right when row scrolls into view using Framer Motion
+
+---
+
+### Row 4 — Bottom Strip (three columns)
+```
+┌─────────────────┬──────────────────┬──────────────┐
+│ Executive       │ Recommended      │ Competitors  │
+│ summary +       │ first move       │ list from    │
+│ assumptions     │ + wildcard       │ Agent 2      │
+└─────────────────┴──────────────────┴──────────────┘
+```
+
+**Left — executive_summary from agent6_output + critical_assumptions (3 numbered cards)**
+**Center — recommended_first_move as highlighted CTA card + biggest_wildcard below it**
+**Right — major_local_competitors list from agent2_output, each as a simple row**
 
 ---
 
@@ -178,94 +292,14 @@ Final event `complete_report` contains: product_description, current_market, tar
 
 ---
 
-## Frontend — Milestone 2
+## Coding Conventions — Frontend
 
-### Overview
-The frontend is a single scrollable page divided into clearly defined sections. It is built with React + Vite. Do not use any other framework. Styling is done exclusively with Tailwind CSS utility classes — do not write custom CSS files unless absolutely necessary for animations. The page has a dark theme.
-
-### Page Structure — One Scrollable Page with 7 Sections
-
-```
-Section 1 — Input Form        (full screen, centered)
-Section 2 — Agent Progress    (sticky top bar + modal button)
-Section 3 — Hero Visuals      (dot map + radar chart side by side)
-Section 4 — Persona Cards     (horizontal scroll of 5 flippable cards)
-Section 5 — Obstacle Matrix   (severity vs time sensitivity scatter plot)
-Section 6 — Entry Roadmap     (phased horizontal timeline)
-Section 7 — Verdict Summary   (assumptions + first move + wildcard)
-```
-
-Sections 2-7 are hidden until the simulation completes. They fade in as agents complete.
-
-### Section 1 — Input Form
-- Full screen centered layout
-- MarketSim logo/wordmark at top
-- Three inputs: product description (textarea), current market (text input), target market (text input)
-- Large "Run Simulation" button
-- On submit: hide Section 1, show Section 2, open SSE connection via useSimulation hook
-
-### Section 2 — Agent Progress
-- Sticky horizontal bar at the top of the page visible throughout scrolling
-- Shows 7 small agent pills in a row — dim when waiting, pulsing green when running, solid green when done
-- "View agent network" button on the right of the bar
-- Clicking the button opens the Agent Network Modal
-- Agent Network Modal: semi-transparent dark overlay, 7 agent nodes arranged in a circle connected by lines, animated data packets travel between completed nodes, agents activate sequentially as SSE events arrive, close by clicking outside or X button
-
-### Section 3 — Hero Visuals (two side by side)
-
-**Left — Animated Country Dot Map (D3)**
-- Render the country silhouette from GeoJSON using D3-geo
-- Country data loaded from a public GeoJSON source or bundled file
-- 200 dots from Agent 7 instances spawn gradually using spawn_delay_ms
-- Dot color by conversion_outcome: converted=green, evaluating=amber, abandoned=red/dim
-- Dot size and pulse_intensity controls brightness and animation
-- Verdict overlay: transparent rectangle with colored corners only (not filled) — corners drawn in green/amber/red matching verdict, single word GO / CAUTIOUS / NO-GO in center
-- Clicking a dot shows a popup with: avatar silhouette (based on avatar_style), display_name, job_title, archetype_label, conversion_outcome badge, outcome_reason, deciding_factor
-
-**Right — Signal Radar Chart (Recharts)**
-- Hexagonal radar/spider chart
-- 6 axes from Agent 6 radar_scores: Market growth, Cultural fit, Internet penetration, Political stability, Ease of business, Corruption index
-- Filled polygon showing scores, dashed outline showing ideal (80 on all axes)
-- Color coded fill — green if average above 60, amber if 40-60, red if below 40
-
-### Section 4 — Persona Cards
-- 5 cards in a horizontal scrollable row
-- Each card shows front face by default: avatar initial circle, name+age, job title, city, likelihood badge (green/amber/red)
-- Click/tap card to flip to back face showing variance profile: conversion range, key variables, tipping points
-- Cards animate in one by one when Section 3 is visible
-
-### Section 5 — Obstacle Matrix
-- Scatter plot with severity on Y axis and time sensitivity on X axis
-- 5 dots — one per obstacle — sized by severity (Critical=largest)
-- Color coded: Critical=red, High=orange, Medium=amber, Low=green
-- Hover/click shows obstacle title, description, mitigation
-
-### Section 6 — Entry Roadmap
-- Horizontal timeline with 3-4 phases from Agent 6 market_entry_sequence
-- Each phase has: phase number circle, phase name, timeframe, list of actions
-- Phases connected by a line — color progresses from red (legal/compliance) to green (scale)
-- Animate in left to right when section scrolls into view
-
-### Section 7 — Verdict Summary
-- Three critical assumptions as numbered cards each with assumption text and consequence_if_false
-- Recommended first move as a highlighted call-to-action card
-- Biggest wildcard and revisit trigger as smaller info cards side by side
-- Time to first revenue and estimated CAC as stat callouts
-
-### useSimulation Hook
-- Opens EventSource connection to `/api/simulate` with query params
-- Parses each SSE event and updates state
-- Exposes: agentStatuses (array of 7), isRunning, isComplete, completeReport, error
-- On final event sets isComplete=true and stores completeReport
-- On error event sets error message and stops
-
-### Coding Conventions — Frontend
 - One component per file
 - Props typed with PropTypes
-- No inline styles — Tailwind classes only
+- All colors from theme object — never hardcode hex values in components
 - All D3 code inside useEffect with proper cleanup
 - All chart data derived from completeReport in the component, not in the hook
-- Console.log allowed during development for debugging SSE events
+- Console.log allowed during development
 
 ---
 
@@ -273,17 +307,11 @@ Sections 2-7 are hidden until the simulation completes. They fade in as agents c
 
 ### Milestone 0 — Setup ✅
 ### Milestone 1 — Agent Pipeline + SSE ✅
-### Milestone 2 — Frontend 🔲
-Build order:
-1. Scaffold React + Vite + Tailwind
-2. useSimulation hook
-3. Section 1 — Input Form
-4. Section 2 — Agent Progress bar + modal
-5. Section 3 — Dot map + radar chart
-6. Section 4 — Persona cards
-7. Section 5 — Obstacle matrix
-8. Section 6 — Entry roadmap
-9. Section 7 — Verdict summary
+### Milestone 2 — Frontend 🔄 In Progress
+- Section 1 Input Form ✅
+- Section 2 Agent Progress + Modal ✅
+- Section 3 Report Dashboard 🔲 — next to build
+  - Build order: ReportDashboard container → HeroMap → PersonaCards → ObstacleCards → RadarChart → MarketStats → CulturalFit → EntryRoadmap → BottomStrip
 
 ### Milestone 3 — Polish & Deploy 🔲
 - Tested with 3 different product + market combinations

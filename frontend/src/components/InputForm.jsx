@@ -1,23 +1,6 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const labelClass = 'block text-xs font-normal mb-1.5 uppercase tracking-widest'
-const labelStyle = { color: '#6B6B78' }
-
-const inputStyle = {
-  width: '100%',
-  background: '#0D0D10',
-  border: '1px solid #1C1C22',
-  borderRadius: 8,
-  padding: '0.75rem',
-  color: '#D0D0D8',
-  fontSize: 14,
-  outline: 'none',
-  boxSizing: 'border-box',
-  transition: 'border-color 0.15s',
-  resize: 'none',
-}
-
 const TIPS = [
   {
     label: 'Your product',
@@ -33,20 +16,44 @@ const TIPS = [
   },
 ]
 
-function Field({ label, children }) {
+function Field({ label, theme, children }) {
   return (
-    <div className="mb-4">
-      <label className={labelClass} style={labelStyle}>{label}</label>
+    <div style={{ marginBottom: '1rem' }}>
+      <label
+        style={{
+          display: 'block',
+          fontSize: 11,
+          fontWeight: 400,
+          marginBottom: 6,
+          textTransform: 'uppercase',
+          letterSpacing: '0.12em',
+          color: theme.textSecondary,
+        }}
+      >
+        {label}
+      </label>
       {children}
     </div>
   )
 }
 
-function StyledInput({ as: Tag = 'input', ...props }) {
+function StyledInput({ as: Tag = 'input', theme, ...props }) {
   const [focused, setFocused] = useState(false)
   return (
     <Tag
-      style={{ ...inputStyle, borderColor: focused ? '#2E2E3A' : '#1C1C22' }}
+      style={{
+        width: '100%',
+        background: theme.bgInput,
+        border: `1px solid ${focused ? theme.borderStrong : theme.borderDefault}`,
+        borderRadius: 8,
+        padding: '0.75rem',
+        color: theme.textInput,
+        fontSize: 14,
+        outline: 'none',
+        boxSizing: 'border-box',
+        transition: 'border-color 0.15s',
+        resize: 'none',
+      }}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       {...props}
@@ -54,7 +61,7 @@ function StyledInput({ as: Tag = 'input', ...props }) {
   )
 }
 
-export default function InputForm({ startSimulation, isRunning, onSimulationStart }) {
+export default function InputForm({ startSimulation, isRunning, onSimulationStart, theme, isDark }) {
   const [productDescription, setProductDescription] = useState('')
   const [currentMarket, setCurrentMarket] = useState('')
   const [targetMarket, setTargetMarket] = useState('')
@@ -83,17 +90,15 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4">
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 1rem' }}>
       <div style={{ width: '100%', maxWidth: 520 }}>
         <div
           style={{
-            background: '#111116',
-            borderTop: '1px solid #2E2E3A',
-            borderRight: '1px solid #1C1C22',
-            borderBottom: '1px solid #1C1C22',
-            borderLeft: '1px solid #1C1C22',
+            background: theme.bgCard,
+            border: `1.5px solid ${theme.borderStrong}`,
             borderRadius: 16,
             padding: '2.5rem',
+            boxShadow: theme.cardShadow,
           }}
         >
           {/* Wordmark */}
@@ -102,7 +107,7 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
               fontSize: 13,
               fontWeight: 400,
               letterSpacing: '0.18em',
-              color: '#6B6B78',
+              color: theme.wordmark,
               textTransform: 'uppercase',
               marginBottom: '1.5rem',
             }}
@@ -115,7 +120,7 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
             style={{
               fontSize: 26,
               fontWeight: 600,
-              color: '#E8E8ED',
+              color: theme.textPrimary,
               lineHeight: 1.2,
               margin: 0,
             }}
@@ -127,7 +132,7 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
           <p
             style={{
               fontSize: 14,
-              color: '#6B6B78',
+              color: theme.textSecondary,
               marginTop: '0.5rem',
               marginBottom: '1rem',
             }}
@@ -145,7 +150,7 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
                 border: 'none',
                 padding: 0,
                 cursor: 'pointer',
-                color: '#6B6B78',
+                color: theme.textSecondary,
                 fontSize: 12,
                 display: 'flex',
                 alignItems: 'center',
@@ -167,7 +172,7 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
                 style={{
                   marginTop: '0.75rem',
                   paddingLeft: 12,
-                  borderLeft: '2px solid #1C1C22',
+                  borderLeft: `2px solid ${theme.borderDefault}`,
                   listStyle: 'none',
                   display: 'flex',
                   flexDirection: 'column',
@@ -175,9 +180,9 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
                 }}
               >
                 {TIPS.map((tip) => (
-                  <li key={tip.label} style={{ fontSize: 12, lineHeight: 1.6, color: '#6B6B78' }}>
-                    <span style={{ color: '#8B3A52', marginRight: 6 }}>—</span>
-                    <strong style={{ color: '#6B6B78', fontWeight: 500 }}>{tip.label}</strong>
+                  <li key={tip.label} style={{ fontSize: 12, lineHeight: 1.6, color: theme.textSecondary }}>
+                    <span style={{ color: theme.accentWine, marginRight: 6 }}>—</span>
+                    <strong style={{ color: theme.textSecondary, fontWeight: 500 }}>{tip.label}</strong>
                     {' — '}
                     {tip.text}
                   </li>
@@ -188,9 +193,10 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
 
           <form onSubmit={handleSubmit} noValidate>
             {/* Product description */}
-            <Field label="Your product">
+            <Field label="Your product" theme={theme}>
               <StyledInput
                 as="textarea"
+                theme={theme}
                 rows={4}
                 placeholder="Describe your product in 1-3 sentences — what it does, who it serves, how it works"
                 value={productDescription}
@@ -201,7 +207,7 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
               <p
                 style={{
                   fontSize: 11,
-                  color: productDescription.length > 500 ? '#8B3A52' : '#6B6B78',
+                  color: productDescription.length > 500 ? theme.accentWine : theme.textSecondary,
                   textAlign: 'right',
                   marginTop: 4,
                 }}
@@ -210,9 +216,11 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
               </p>
             </Field>
 
-            <div className="grid grid-cols-2 gap-3 mb-0">
-              <Field label="Current market">
+            {/* Side-by-side market inputs */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <Field label="Current market" theme={theme}>
                 <StyledInput
+                  theme={theme}
                   type="text"
                   placeholder="e.g. United States"
                   value={currentMarket}
@@ -220,8 +228,9 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
                   disabled={isRunning}
                 />
               </Field>
-              <Field label="Target market">
+              <Field label="Target market" theme={theme}>
                 <StyledInput
+                  theme={theme}
                   type="text"
                   placeholder="e.g. Brazil"
                   value={targetMarket}
@@ -232,7 +241,7 @@ export default function InputForm({ startSimulation, isRunning, onSimulationStar
             </div>
 
             {validationError && (
-              <p style={{ color: '#8B3A52', fontSize: 12, marginTop: '0.75rem' }}>
+              <p style={{ color: theme.accentWine, fontSize: 12, marginTop: '0.75rem' }}>
                 {validationError}
               </p>
             )}
@@ -264,4 +273,6 @@ InputForm.propTypes = {
   startSimulation: PropTypes.func.isRequired,
   isRunning: PropTypes.bool.isRequired,
   onSimulationStart: PropTypes.func.isRequired,
+  theme: PropTypes.object.isRequired,
+  isDark: PropTypes.bool.isRequired,
 }

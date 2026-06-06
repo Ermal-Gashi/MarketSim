@@ -72,7 +72,7 @@ _AGENT_NAMES = {
     7: "Simulation Layer",
 }
 
-AGENT_TIMEOUT = 300
+AGENT_TIMEOUT = 600
 
 
 def _sse(payload: dict) -> str:
