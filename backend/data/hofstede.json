@@ -1,0 +1,898 @@
+{
+  "Africa East": {
+    "PDI": 64,
+    "IDV": 27,
+    "MAS": 41,
+    "UAI": 52,
+    "LTO": 32,
+    "IVR": 40
+  },
+  "Africa West": {
+    "PDI": 77,
+    "IDV": 20,
+    "MAS": 46,
+    "UAI": 54,
+    "LTO": 9,
+    "IVR": 78
+  },
+  "Albania": {
+    "PDI": 90,
+    "IDV": 20,
+    "MAS": 80,
+    "UAI": 70,
+    "LTO": 61,
+    "IVR": 15
+  },
+  "Algeria": {
+    "PDI": 80,
+    "IDV": 35,
+    "MAS": 53,
+    "UAI": 68,
+    "LTO": 26,
+    "IVR": 32
+  },
+  "Andorra": {
+    "PDI": 40,
+    "IDV": 65,
+    "MAS": 45,
+    "UAI": 65,
+    "LTO": 48,
+    "IVR": 65
+  },
+  "Arab Countries": {
+    "PDI": 80,
+    "IDV": 38,
+    "MAS": 53,
+    "UAI": 68,
+    "LTO": 23,
+    "IVR": 34
+  },
+  "Argentina": {
+    "PDI": 49,
+    "IDV": 46,
+    "MAS": 56,
+    "UAI": 86,
+    "LTO": 20,
+    "IVR": 62
+  },
+  "Armenia": {
+    "PDI": 50,
+    "IDV": 25,
+    "MAS": 35,
+    "UAI": 80,
+    "LTO": 61,
+    "IVR": 10
+  },
+  "Australia": {
+    "PDI": 38,
+    "IDV": 90,
+    "MAS": 61,
+    "UAI": 51,
+    "LTO": 21,
+    "IVR": 71
+  },
+  "Austria": {
+    "PDI": 11,
+    "IDV": 55,
+    "MAS": 79,
+    "UAI": 70,
+    "LTO": 60,
+    "IVR": 63
+  },
+  "Azerbaijan": {
+    "PDI": 93,
+    "IDV": 25,
+    "MAS": 58,
+    "UAI": 68,
+    "LTO": 61,
+    "IVR": 22
+  },
+  "Bangladesh": {
+    "PDI": 80,
+    "IDV": 20,
+    "MAS": 55,
+    "UAI": 60,
+    "LTO": 47,
+    "IVR": 20
+  },
+  "Belarus": {
+    "PDI": 93,
+    "IDV": 25,
+    "MAS": 47,
+    "UAI": 95,
+    "LTO": 81,
+    "IVR": 15
+  },
+  "Belgium": {
+    "PDI": 65,
+    "IDV": 75,
+    "MAS": 54,
+    "UAI": 94,
+    "LTO": 82,
+    "IVR": 57
+  },
+  "Belgium (French)": {
+    "PDI": 67,
+    "IDV": 72,
+    "MAS": 60,
+    "UAI": 93,
+    "LTO": null,
+    "IVR": null
+  },
+  "Belgium (Dutch)": {
+    "PDI": 61,
+    "IDV": 78,
+    "MAS": 43,
+    "UAI": 97,
+    "LTO": null,
+    "IVR": null
+  },
+  "Bosnia": {
+    "PDI": 74,
+    "IDV": 27,
+    "MAS": 45,
+    "UAI": 80,
+    "LTO": 70,
+    "IVR": 44
+  },
+  "Brazil": {
+    "PDI": 69,
+    "IDV": 38,
+    "MAS": 49,
+    "UAI": 76,
+    "LTO": 44,
+    "IVR": 59
+  },
+  "Bulgaria": {
+    "PDI": 70,
+    "IDV": 30,
+    "MAS": 40,
+    "UAI": 85,
+    "LTO": 69,
+    "IVR": 16
+  },
+  "Burkina Faso": {
+    "PDI": 70,
+    "IDV": 15,
+    "MAS": 50,
+    "UAI": 55,
+    "LTO": 27,
+    "IVR": 18
+  },
+  "Canada": {
+    "PDI": 39,
+    "IDV": 80,
+    "MAS": 52,
+    "UAI": 48,
+    "LTO": 36,
+    "IVR": 68
+  },
+  "Canada (French)": {
+    "PDI": 54,
+    "IDV": 73,
+    "MAS": 45,
+    "UAI": 60,
+    "LTO": null,
+    "IVR": null
+  },
+  "Chile": {
+    "PDI": 63,
+    "IDV": 23,
+    "MAS": 28,
+    "UAI": 86,
+    "LTO": 31,
+    "IVR": 68
+  },
+  "China": {
+    "PDI": 80,
+    "IDV": 20,
+    "MAS": 66,
+    "UAI": 30,
+    "LTO": 87,
+    "IVR": 24
+  },
+  "Colombia": {
+    "PDI": 67,
+    "IDV": 13,
+    "MAS": 64,
+    "UAI": 80,
+    "LTO": 13,
+    "IVR": 83
+  },
+  "Costa Rica": {
+    "PDI": 35,
+    "IDV": 15,
+    "MAS": 21,
+    "UAI": 86,
+    "LTO": null,
+    "IVR": null
+  },
+  "Croatia": {
+    "PDI": 73,
+    "IDV": 33,
+    "MAS": 40,
+    "UAI": 80,
+    "LTO": 58,
+    "IVR": 33
+  },
+  "Cyprus": {
+    "PDI": 60,
+    "IDV": 35,
+    "MAS": 57,
+    "UAI": 95,
+    "LTO": 45,
+    "IVR": 70
+  },
+  "Czech Republic": {
+    "PDI": 57,
+    "IDV": 58,
+    "MAS": 57,
+    "UAI": 74,
+    "LTO": 70,
+    "IVR": 29
+  },
+  "Denmark": {
+    "PDI": 18,
+    "IDV": 74,
+    "MAS": 16,
+    "UAI": 23,
+    "LTO": 35,
+    "IVR": 70
+  },
+  "Dominican Republic": {
+    "PDI": 65,
+    "IDV": 30,
+    "MAS": 65,
+    "UAI": 45,
+    "LTO": 13,
+    "IVR": 54
+  },
+  "Ecuador": {
+    "PDI": 78,
+    "IDV": 8,
+    "MAS": 63,
+    "UAI": 67,
+    "LTO": null,
+    "IVR": null
+  },
+  "Egypt": {
+    "PDI": 70,
+    "IDV": 25,
+    "MAS": 45,
+    "UAI": 80,
+    "LTO": 7,
+    "IVR": 4
+  },
+  "Ethiopia": {
+    "PDI": 70,
+    "IDV": 20,
+    "MAS": 65,
+    "UAI": 55,
+    "LTO": 45,
+    "IVR": 46
+  },
+  "El Salvador": {
+    "PDI": 66,
+    "IDV": 19,
+    "MAS": 40,
+    "UAI": 94,
+    "LTO": 20,
+    "IVR": 89
+  },
+  "Estonia": {
+    "PDI": 40,
+    "IDV": 60,
+    "MAS": 30,
+    "UAI": 60,
+    "LTO": 82,
+    "IVR": 16
+  },
+  "Finland": {
+    "PDI": 33,
+    "IDV": 63,
+    "MAS": 26,
+    "UAI": 59,
+    "LTO": 38,
+    "IVR": 57
+  },
+  "France": {
+    "PDI": 68,
+    "IDV": 71,
+    "MAS": 43,
+    "UAI": 86,
+    "LTO": 63,
+    "IVR": 48
+  },
+  "Georgia": {
+    "PDI": 75,
+    "IDV": 25,
+    "MAS": 55,
+    "UAI": 80,
+    "LTO": 38,
+    "IVR": 32
+  },
+  "Germany": {
+    "PDI": 35,
+    "IDV": 67,
+    "MAS": 66,
+    "UAI": 65,
+    "LTO": 83,
+    "IVR": 40
+  },
+  "Germany (East)": {
+    "PDI": null,
+    "IDV": null,
+    "MAS": null,
+    "UAI": null,
+    "LTO": 78,
+    "IVR": 34
+  },
+  "Ghana": {
+    "PDI": 80,
+    "IDV": 15,
+    "MAS": 40,
+    "UAI": 65,
+    "LTO": 4,
+    "IVR": 72
+  },
+  "United Kingdom": {
+    "PDI": 35,
+    "IDV": 89,
+    "MAS": 66,
+    "UAI": 35,
+    "LTO": 51,
+    "IVR": 69
+  },
+  "Greece": {
+    "PDI": 60,
+    "IDV": 35,
+    "MAS": 57,
+    "UAI": 112,
+    "LTO": 45,
+    "IVR": 50
+  },
+  "Guatemala": {
+    "PDI": 95,
+    "IDV": 6,
+    "MAS": 37,
+    "UAI": 101,
+    "LTO": null,
+    "IVR": null
+  },
+  "Hong Kong": {
+    "PDI": 68,
+    "IDV": 25,
+    "MAS": 57,
+    "UAI": 29,
+    "LTO": 61,
+    "IVR": 17
+  },
+  "Hungary": {
+    "PDI": 46,
+    "IDV": 80,
+    "MAS": 88,
+    "UAI": 82,
+    "LTO": 58,
+    "IVR": 31
+  },
+  "Iceland": {
+    "PDI": 30,
+    "IDV": 60,
+    "MAS": 10,
+    "UAI": 50,
+    "LTO": 28,
+    "IVR": 67
+  },
+  "India": {
+    "PDI": 77,
+    "IDV": 48,
+    "MAS": 56,
+    "UAI": 40,
+    "LTO": 51,
+    "IVR": 26
+  },
+  "Indonesia": {
+    "PDI": 78,
+    "IDV": 14,
+    "MAS": 46,
+    "UAI": 48,
+    "LTO": 62,
+    "IVR": 38
+  },
+  "Iran": {
+    "PDI": 58,
+    "IDV": 41,
+    "MAS": 43,
+    "UAI": 59,
+    "LTO": 14,
+    "IVR": 40
+  },
+  "Iraq": {
+    "PDI": 95,
+    "IDV": 30,
+    "MAS": 70,
+    "UAI": 85,
+    "LTO": 25,
+    "IVR": 17
+  },
+  "Ireland": {
+    "PDI": 28,
+    "IDV": 70,
+    "MAS": 68,
+    "UAI": 35,
+    "LTO": 24,
+    "IVR": 65
+  },
+  "Israel": {
+    "PDI": 13,
+    "IDV": 54,
+    "MAS": 47,
+    "UAI": 81,
+    "LTO": 38,
+    "IVR": null
+  },
+  "Italy": {
+    "PDI": 50,
+    "IDV": 76,
+    "MAS": 70,
+    "UAI": 75,
+    "LTO": 61,
+    "IVR": 30
+  },
+  "Jamaica": {
+    "PDI": 45,
+    "IDV": 39,
+    "MAS": 68,
+    "UAI": 13,
+    "LTO": null,
+    "IVR": null
+  },
+  "Japan": {
+    "PDI": 54,
+    "IDV": 46,
+    "MAS": 95,
+    "UAI": 92,
+    "LTO": 88,
+    "IVR": 42
+  },
+  "Jordan": {
+    "PDI": 70,
+    "IDV": 30,
+    "MAS": 45,
+    "UAI": 65,
+    "LTO": 16,
+    "IVR": 43
+  },
+  "South Korea": {
+    "PDI": 60,
+    "IDV": 18,
+    "MAS": 39,
+    "UAI": 85,
+    "LTO": 100,
+    "IVR": 29
+  },
+  "Kyrgyz Republic": {
+    "PDI": 80,
+    "IDV": 30,
+    "MAS": 50,
+    "UAI": 60,
+    "LTO": 66,
+    "IVR": 39
+  },
+  "Latvia": {
+    "PDI": 44,
+    "IDV": 70,
+    "MAS": 9,
+    "UAI": 63,
+    "LTO": 69,
+    "IVR": 13
+  },
+  "Lithuania": {
+    "PDI": 42,
+    "IDV": 60,
+    "MAS": 19,
+    "UAI": 65,
+    "LTO": 82,
+    "IVR": 16
+  },
+  "Luxembourg": {
+    "PDI": 40,
+    "IDV": 60,
+    "MAS": 50,
+    "UAI": 70,
+    "LTO": 64,
+    "IVR": 56
+  },
+  "Macedonia": {
+    "PDI": 90,
+    "IDV": 20,
+    "MAS": 45,
+    "UAI": 85,
+    "LTO": 62,
+    "IVR": 35
+  },
+  "Malaysia": {
+    "PDI": 104,
+    "IDV": 26,
+    "MAS": 50,
+    "UAI": 36,
+    "LTO": 41,
+    "IVR": 57
+  },
+  "Mali": {
+    "PDI": 70,
+    "IDV": 20,
+    "MAS": 45,
+    "UAI": 55,
+    "LTO": 20,
+    "IVR": 43
+  },
+  "Malta": {
+    "PDI": 56,
+    "IDV": 59,
+    "MAS": 47,
+    "UAI": 96,
+    "LTO": 47,
+    "IVR": 66
+  },
+  "Mexico": {
+    "PDI": 81,
+    "IDV": 30,
+    "MAS": 69,
+    "UAI": 82,
+    "LTO": 24,
+    "IVR": 97
+  },
+  "Moldova": {
+    "PDI": 90,
+    "IDV": 25,
+    "MAS": 40,
+    "UAI": 90,
+    "LTO": 71,
+    "IVR": 19
+  },
+  "Montenegro": {
+    "PDI": 90,
+    "IDV": 25,
+    "MAS": 50,
+    "UAI": 85,
+    "LTO": 75,
+    "IVR": 20
+  },
+  "Morocco": {
+    "PDI": 70,
+    "IDV": 46,
+    "MAS": 53,
+    "UAI": 68,
+    "LTO": 14,
+    "IVR": 25
+  },
+  "Netherlands": {
+    "PDI": 38,
+    "IDV": 80,
+    "MAS": 14,
+    "UAI": 53,
+    "LTO": 67,
+    "IVR": 68
+  },
+  "New Zealand": {
+    "PDI": 22,
+    "IDV": 79,
+    "MAS": 58,
+    "UAI": 49,
+    "LTO": 33,
+    "IVR": 75
+  },
+  "Nigeria": {
+    "PDI": 80,
+    "IDV": 30,
+    "MAS": 60,
+    "UAI": 55,
+    "LTO": 13,
+    "IVR": 84
+  },
+  "Norway": {
+    "PDI": 31,
+    "IDV": 69,
+    "MAS": 8,
+    "UAI": 50,
+    "LTO": 35,
+    "IVR": 55
+  },
+  "Pakistan": {
+    "PDI": 55,
+    "IDV": 14,
+    "MAS": 50,
+    "UAI": 70,
+    "LTO": 50,
+    "IVR": 0
+  },
+  "Panama": {
+    "PDI": 95,
+    "IDV": 11,
+    "MAS": 44,
+    "UAI": 86,
+    "LTO": null,
+    "IVR": null
+  },
+  "Peru": {
+    "PDI": 64,
+    "IDV": 16,
+    "MAS": 42,
+    "UAI": 87,
+    "LTO": 25,
+    "IVR": 46
+  },
+  "Philippines": {
+    "PDI": 94,
+    "IDV": 32,
+    "MAS": 64,
+    "UAI": 44,
+    "LTO": 27,
+    "IVR": 42
+  },
+  "Poland": {
+    "PDI": 68,
+    "IDV": 60,
+    "MAS": 64,
+    "UAI": 93,
+    "LTO": 38,
+    "IVR": 29
+  },
+  "Portugal": {
+    "PDI": 63,
+    "IDV": 27,
+    "MAS": 31,
+    "UAI": 104,
+    "LTO": 28,
+    "IVR": 33
+  },
+  "Puerto Rico": {
+    "PDI": 65,
+    "IDV": 35,
+    "MAS": 55,
+    "UAI": 45,
+    "LTO": 0,
+    "IVR": 90
+  },
+  "Romania": {
+    "PDI": 90,
+    "IDV": 30,
+    "MAS": 42,
+    "UAI": 90,
+    "LTO": 52,
+    "IVR": 20
+  },
+  "Russia": {
+    "PDI": 93,
+    "IDV": 39,
+    "MAS": 36,
+    "UAI": 95,
+    "LTO": 81,
+    "IVR": 20
+  },
+  "Rwanda": {
+    "PDI": 75,
+    "IDV": 20,
+    "MAS": 55,
+    "UAI": 50,
+    "LTO": 18,
+    "IVR": 37
+  },
+  "Saudi Arabia": {
+    "PDI": 95,
+    "IDV": 25,
+    "MAS": 60,
+    "UAI": 80,
+    "LTO": 36,
+    "IVR": 52
+  },
+  "Serbia": {
+    "PDI": 86,
+    "IDV": 25,
+    "MAS": 43,
+    "UAI": 92,
+    "LTO": 52,
+    "IVR": 28
+  },
+  "Singapore": {
+    "PDI": 74,
+    "IDV": 20,
+    "MAS": 48,
+    "UAI": 8,
+    "LTO": 72,
+    "IVR": 46
+  },
+  "Slovakia": {
+    "PDI": 104,
+    "IDV": 52,
+    "MAS": 110,
+    "UAI": 51,
+    "LTO": 77,
+    "IVR": 28
+  },
+  "Slovenia": {
+    "PDI": 71,
+    "IDV": 27,
+    "MAS": 19,
+    "UAI": 88,
+    "LTO": 49,
+    "IVR": 48
+  },
+  "South Africa": {
+    "PDI": 49,
+    "IDV": 65,
+    "MAS": 63,
+    "UAI": 49,
+    "LTO": 34,
+    "IVR": 63
+  },
+  "South Africa (White)": {
+    "PDI": 49,
+    "IDV": 65,
+    "MAS": 63,
+    "UAI": 49,
+    "LTO": null,
+    "IVR": null
+  },
+  "Spain": {
+    "PDI": 57,
+    "IDV": 51,
+    "MAS": 42,
+    "UAI": 86,
+    "LTO": 48,
+    "IVR": 44
+  },
+  "Suriname": {
+    "PDI": 85,
+    "IDV": 47,
+    "MAS": 37,
+    "UAI": 92,
+    "LTO": null,
+    "IVR": null
+  },
+  "Sweden": {
+    "PDI": 31,
+    "IDV": 71,
+    "MAS": 5,
+    "UAI": 29,
+    "LTO": 53,
+    "IVR": 78
+  },
+  "Switzerland": {
+    "PDI": 34,
+    "IDV": 68,
+    "MAS": 70,
+    "UAI": 58,
+    "LTO": 74,
+    "IVR": 66
+  },
+  "Switzerland (French)": {
+    "PDI": 70,
+    "IDV": 64,
+    "MAS": 58,
+    "UAI": 70,
+    "LTO": null,
+    "IVR": null
+  },
+  "Switzerland (German)": {
+    "PDI": 26,
+    "IDV": 69,
+    "MAS": 72,
+    "UAI": 56,
+    "LTO": null,
+    "IVR": null
+  },
+  "Taiwan": {
+    "PDI": 58,
+    "IDV": 17,
+    "MAS": 45,
+    "UAI": 69,
+    "LTO": 93,
+    "IVR": 49
+  },
+  "Tanzania": {
+    "PDI": 70,
+    "IDV": 25,
+    "MAS": 40,
+    "UAI": 50,
+    "LTO": 34,
+    "IVR": 38
+  },
+  "Thailand": {
+    "PDI": 64,
+    "IDV": 20,
+    "MAS": 34,
+    "UAI": 64,
+    "LTO": 32,
+    "IVR": 45
+  },
+  "Trinidad and Tobago": {
+    "PDI": 47,
+    "IDV": 16,
+    "MAS": 58,
+    "UAI": 55,
+    "LTO": 13,
+    "IVR": 80
+  },
+  "Turkey": {
+    "PDI": 66,
+    "IDV": 37,
+    "MAS": 45,
+    "UAI": 85,
+    "LTO": 46,
+    "IVR": 49
+  },
+  "United States": {
+    "PDI": 40,
+    "IDV": 91,
+    "MAS": 62,
+    "UAI": 46,
+    "LTO": 26,
+    "IVR": 68
+  },
+  "Uganda": {
+    "PDI": 80,
+    "IDV": 20,
+    "MAS": 60,
+    "UAI": 50,
+    "LTO": 24,
+    "IVR": 52
+  },
+  "Ukraine": {
+    "PDI": 92,
+    "IDV": 25,
+    "MAS": 27,
+    "UAI": 95,
+    "LTO": 86,
+    "IVR": 14
+  },
+  "Uruguay": {
+    "PDI": 61,
+    "IDV": 36,
+    "MAS": 38,
+    "UAI": 100,
+    "LTO": 26,
+    "IVR": 53
+  },
+  "Venezuela": {
+    "PDI": 81,
+    "IDV": 12,
+    "MAS": 73,
+    "UAI": 76,
+    "LTO": 16,
+    "IVR": 100
+  },
+  "Vietnam": {
+    "PDI": 70,
+    "IDV": 20,
+    "MAS": 40,
+    "UAI": 30,
+    "LTO": 57,
+    "IVR": 35
+  },
+  "Zambia": {
+    "PDI": 70,
+    "IDV": 35,
+    "MAS": 40,
+    "UAI": 50,
+    "LTO": 30,
+    "IVR": 42
+  },
+  "Zimbabwe": {
+    "PDI": 70,
+    "IDV": 15,
+    "MAS": 40,
+    "UAI": 55,
+    "LTO": 15,
+    "IVR": 28
+  },
+  "Kenya": {
+    "PDI": 70,
+    "IDV": 25,
+    "MAS": 60,
+    "UAI": 50,
+    "LTO": 32,
+    "IVR": 40
+  }
+}

@@ -195,6 +195,134 @@ def check_agent2() -> bool:
     return True
 
 
+# Hardcoded Agent 2 output stub for Brazil / TaskFlow
+AGENT2_OUTPUT_STUB = {
+    "country_name": "Brazil",
+    "gdp_per_capita_usd": 10310.55,
+    "internet_penetration_pct": 84.46,
+    "population": 213421037,
+    "currency": "BRL - Brazilian Real",
+    "languages": ["Portuguese"],
+    "market_maturity": "developing",
+    "payment_infrastructure": (
+        "Dominated by Pix (instant payment system) and boleto bancário. "
+        "Credit card penetration is moderate (~45%). PayPal and Stripe have limited reach. "
+        "SaaS billing requires local payment gateway support (e.g. Iugu, Pagar.me)."
+    ),
+    "major_local_competitors": ["Trello (localised)", "Monday.com BR", "Asana", "Runrun.it", "Moskit CRM"],
+    "regulatory_notes": (
+        "LGPD (Lei Geral de Proteção de Dados) is Brazil's GDPR equivalent — full compliance required. "
+        "Foreign companies must appoint a local data protection officer. "
+        "Marco Civil da Internet governs data localisation for some categories."
+    ),
+    "regional_breakdown": "São Paulo and Rio de Janeiro are the primary beachheads for B2B SaaS.",
+    "market_trend": "growing",
+    "market_trend_explanation": "Brazil's SaaS market is growing at ~25% YoY driven by SME digitisation.",
+    "tech_adoption_profile": (
+        "Mid-tier adopter. Urban tech hubs (SP, RJ) adopt quickly; "
+        "SMEs outside major cities lag 12-18 months behind."
+    ),
+    "data_source": "world_bank + rest_countries",
+}
+
+AGENT3_MANDATORY_FIELDS = {
+    "cultural_fit_score": int,
+    "score_label": str,
+    "dimension_analysis": list,
+    "overall_explanation": str,
+}
+
+AGENT3_OPTIONAL_FIELDS = [
+    "messaging_recommendations",
+    "sales_motion_recommendation",
+    "cultural_red_flags",
+    "cultural_tailwinds",
+]
+
+VALID_SCORE_LABELS = {
+    "Excellent Fit", "Good Fit", "Moderate Fit", "Poor Fit", "Very Poor Fit"
+}
+
+
+def check_agent3() -> bool:
+    from backend.agents.cultural_fit_scorer import run
+
+    agent3_input = {
+        "target_market": "Brazil",
+        "agent1_output": AGENT1_OUTPUT_STUB,
+        "agent2_output": AGENT2_OUTPUT_STUB,
+    }
+
+    print("\n--- Agent 3: Cultural Fit Scorer ---")
+    print("Input: target_market=Brazil, agent1=TaskFlow stub, agent2=Brazil stub\n")
+
+    try:
+        result = run(agent3_input)
+    except ValueError as exc:
+        print(f"[FAIL] Validation error: {exc}")
+        return False
+    except Exception as exc:
+        print(f"[FAIL] run() raised {type(exc).__name__}: {exc}")
+        return False
+
+    errors = []
+
+    for field, expected_type in AGENT3_MANDATORY_FIELDS.items():
+        if field not in result:
+            errors.append(f"missing mandatory field '{field}'")
+        elif result[field] is None:
+            errors.append(f"'{field}' is null but is mandatory")
+        elif not isinstance(result[field], expected_type):
+            errors.append(
+                f"'{field}' should be {expected_type.__name__}, got {type(result[field]).__name__}"
+            )
+
+    if "score_label" in result and result["score_label"] not in VALID_SCORE_LABELS:
+        errors.append(f"'score_label' invalid: '{result['score_label']}'")
+
+    da = result.get("dimension_analysis")
+    if isinstance(da, list):
+        if len(da) != 6:
+            errors.append(f"'dimension_analysis' must have 6 items, got {len(da)}")
+        else:
+            for i, obj in enumerate(da):
+                for key in ("dimension", "score", "implication"):
+                    if key not in obj:
+                        errors.append(f"dimension_analysis[{i}] missing key '{key}'")
+
+    if isinstance(result.get("cultural_fit_score"), int):
+        score = result["cultural_fit_score"]
+        if not (0 <= score <= 100):
+            errors.append(f"'cultural_fit_score' must be 0-100, got {score}")
+
+    if errors:
+        for e in errors:
+            print(f"[FAIL] {e}")
+        return False
+
+    print("Mandatory fields:")
+    print(f"  cultural_fit_score: {result['cultural_fit_score']}")
+    print(f"  score_label:        {result['score_label']}")
+    print(f"  overall_explanation: {result['overall_explanation']}")
+    print(f"  data_source:        {result.get('data_source')}")
+    print(f"  dimension_analysis:")
+    for dim in result["dimension_analysis"]:
+        print(f"    [{dim.get('dimension')} {dim.get('score')}] {dim.get('implication')}")
+
+    print("\nOptional fields:")
+    for field in AGENT3_OPTIONAL_FIELDS:
+        val = result.get(field)
+        if isinstance(val, list):
+            print(f"  {field}:")
+            for item in val:
+                print(f"    - {item}")
+        else:
+            print(f"  {field}: {val}")
+
+    print("\n[PASS] Agent 3 returned valid output with all mandatory fields.")
+    return True
+
+
 if __name__ == "__main__":
-    results = [check_agent1(), check_agent2()]
+    results = [check_agent1(), check_agent2(), check_agent3()]
     sys.exit(0 if all(results) else 1)
