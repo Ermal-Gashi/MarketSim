@@ -695,6 +695,244 @@ def check_agent5() -> bool:
     return True
 
 
+# Hardcoded Agent 5 output stub for Brazil / TaskFlow
+AGENT5_OUTPUT_STUB = {
+    "obstacles": [
+        {
+            "title": "LGPD Compliance Gate + Local DPO Requirement",
+            "category": "Regulatory",
+            "severity": "Critical",
+            "description": (
+                "Brazil's LGPD mandates a local DPO and Portuguese-language data processing agreements "
+                "before any enterprise procurement sign-off. With CPI of 35, enforcement is selective "
+                "but high-visibility foreign SaaS entrants are disproportionate targets. "
+                "The Cautious Operations Director and The Burnout-Aware Engineering Lead will both "
+                "block vendor contracts without documented LGPD compliance."
+            ),
+            "affected_personas": [
+                "The Cautious Operations Director",
+                "The Burnout-Aware Engineering Lead",
+                "The Ambitious Project Champion",
+            ],
+            "mitigation": (
+                "Engage a Brazilian privacy law firm before any commercial activity to appoint a "
+                "named local DPO, draft a Portuguese LGPD-compliant DPA, and conduct a DPIA "
+                "covering the AI workload-profiling feature. Budget 90 days and R$80-150k BRL."
+            ),
+            "time_sensitivity": "Day-one — enterprise procurement will request LGPD documentation at first commercial conversation.",
+            "cost_to_fix": "High — requires local legal entity or representative, DPO, DPIA, and Portuguese compliance docs. 3-4 months elapsed.",
+            "early_warning_signal": "First enterprise prospect requests a data security questionnaire and TaskFlow cannot produce a Portuguese LGPD-compliant version within 5 business days.",
+        },
+        {
+            "title": "Payment Infrastructure Lockout — Pix/Boleto Gap",
+            "category": "Operational",
+            "severity": "Critical",
+            "description": (
+                "Brazil's SaaS billing is structurally incompatible with standard international payment stacks. "
+                "Pix dominates, boleto bancario is mandatory for SME segments, and Stripe has no native boleto support. "
+                "At household consumption of USD 6,218, The Price-Sensitive SME Founder will not enter a "
+                "credit card billing flow requiring an international card. Without Iugu or Pagar.me, "
+                "TaskFlow will generate pipeline it cannot convert."
+            ),
+            "affected_personas": [
+                "The Price-Sensitive SME Founder",
+                "The Ambitious Project Champion",
+                "The Cautious Operations Director",
+            ],
+            "mitigation": "Integrate Pagar.me or Iugu before soft launch with boleto as a first-class checkout option. Allocate 6-8 weeks for API integration and Portuguese billing flow QA.",
+            "time_sensitivity": "Day-one — this is a conversion blocker, not a growth friction issue. The first paid signup attempt will fail.",
+            "cost_to_fix": "Medium — 6-8 weeks engineering plus gateway setup fees. CNPJ may be required for gateway onboarding.",
+            "early_warning_signal": "Trial-to-paid conversion in Brazil falls below 8% despite healthy trial activation; exit surveys cite 'forma de pagamento' as abandonment reason.",
+        },
+        {
+            "title": "High-PDI Executive Sponsorship Bottleneck",
+            "category": "Cultural",
+            "severity": "High",
+            "description": (
+                "PDI of 69 concentrates decision authority at the top, meaning TaskFlow's AI auto-assignment "
+                "will be perceived as threatening managerial hierarchy if introduced bottom-up. "
+                "The Ambitious Project Champion and The Quietly Influential People Manager will stall "
+                "deals in 'internal review' for 6-9 months without C-suite sponsorship."
+            ),
+            "affected_personas": [
+                "The Ambitious Project Champion",
+                "The Quietly Influential People Manager",
+                "The Cautious Operations Director",
+                "The Burnout-Aware Engineering Lead",
+            ],
+            "mitigation": "Route Brazilian inbound into sales-assisted onboarding requiring a Director-level sponsor before full trial activation. Frame AI assignment as 'manager decision amplified by data', not autonomous AI.",
+            "time_sensitivity": "At first enterprise deal attempt — self-serve pipeline will look healthy in trials but conversion collapses at 30-day mark.",
+            "cost_to_fix": "Medium-High — requires sales motion redesign, Portuguese executive collateral, and a local sales hire or channel partner.",
+            "early_warning_signal": "Trial accounts show IC usage but zero Director/VP engagement after 14 days; deals stall with 'precisamos alinhar internamente'.",
+        },
+        {
+            "title": "Runrun.it and Monday.com BR Price-Anchoring",
+            "category": "Competitive",
+            "severity": "High",
+            "description": (
+                "Runrun.it offers BRL-denominated pricing, Portuguese-first UX, and local case studies — "
+                "exactly the social proof UAI-76 Brazilian buyers require. At current BRL/USD rates, "
+                "TaskFlow's mid-tier USD price is 25-40% above Runrun.it for The Price-Sensitive SME Founder. "
+                "Monday.com BR has also invested in Portuguese localisation and regional references."
+            ),
+            "affected_personas": [
+                "The Price-Sensitive SME Founder",
+                "The Cautious Operations Director",
+                "The Burnout-Aware Engineering Lead",
+            ],
+            "mitigation": "Launch with BRL-denominated pricing benchmarked to Runrun.it mid-tier. Fast-track a lighthouse customer programme — 3-5 Sao Paulo tech companies at 50% discount for 6 months in exchange for Portuguese video case studies.",
+            "time_sensitivity": "At first competitive evaluation — Brazilian buyers request a competitor comparison within the first sales call.",
+            "cost_to_fix": "Medium — BRL pricing page is low-cost; lighthouse programme costs USD 15-30k in foregone ARR but unlocks mid-market pipeline.",
+            "early_warning_signal": "Runrun.it or Monday.com BR cited in >40% of lost deals within Q1; deal cycle exceeds 90 days in SME segment.",
+        },
+        {
+            "title": "English-Only Onboarding Disqualifies Mid-Market",
+            "category": "Cultural",
+            "severity": "Medium",
+            "description": (
+                "IDV of 38 means purchasing involves multiple stakeholders — one team member's inability "
+                "to navigate English UI becomes a group veto. IVR of 59 means Brazilians penalise "
+                "clunky foreign onboarding as a product quality signal. The Price-Sensitive SME Founder "
+                "in Belo Horizonte operates 12-18 months behind Sao Paulo's tech adoption curve, "
+                "making English a hard filter that removes significant SAM."
+            ),
+            "affected_personas": [
+                "The Price-Sensitive SME Founder",
+                "The Ambitious Project Champion",
+                "The Quietly Influential People Manager",
+            ],
+            "mitigation": "Ship complete Brazilian Portuguese UI, onboarding, help docs, and in-app tooltips before any paid marketing in Brazil. Hire a Brazilian UX copywriter (not translator) to adapt onboarding narrative away from AI replacement framing.",
+            "time_sensitivity": "Pre-launch — any paid acquisition before Portuguese localisation is live burns budget acquiring users who churn at first login.",
+            "cost_to_fix": "Medium — 2-3 months localisation work, estimated USD 8-20k depending on product surface area.",
+            "early_warning_signal": "Brazilian trial onboarding completion falls >30% below global baseline; session recordings show abandonment at team invitation or task creation step.",
+        },
+    ]
+}
+
+AGENT6_MANDATORY_FIELDS = [
+    "verdict", "verdict_reason", "confidence_score", "executive_summary",
+    "signal_scorecard", "critical_assumptions", "recommended_first_move",
+    "regional_weights", "dot_intensity", "radar_scores",
+]
+AGENT6_OPTIONAL_FIELDS = [
+    "time_to_first_revenue", "estimated_cac", "biggest_wildcard",
+    "revisit_trigger", "market_entry_sequence",
+]
+VALID_VERDICTS = {"Go", "Cautious Go", "No-Go"}
+RADAR_KEYS = {"Market growth", "Cultural fit", "Internet penetration",
+              "Political stability", "Ease of business", "Corruption index"}
+
+
+def check_agent6() -> bool:
+    from backend.agents.synthesizer import run
+
+    agent6_input = {
+        "agent1_output": AGENT1_OUTPUT_STUB,
+        "agent2_output": AGENT2_OUTPUT_STUB,
+        "agent3_output": AGENT3_OUTPUT_STUB,
+        "agent4_output": AGENT4_OUTPUT_STUB,
+        "agent5_output": AGENT5_OUTPUT_STUB,
+        "biz_env": {"cpi": 35, "ease_of_business": 35, "press_freedom": 66, "political_stability": 40},
+        "household_consumption_usd": 6218,
+    }
+
+    print("\n--- Agent 6: Synthesizer ---")
+    print("Input: all agent stubs, target=Brazil\n")
+
+    try:
+        result = run(agent6_input)
+    except ValueError as exc:
+        print(f"[FAIL] Validation error: {exc}")
+        return False
+    except Exception as exc:
+        print(f"[FAIL] run() raised {type(exc).__name__}: {exc}")
+        return False
+
+    errors = []
+
+    for field in AGENT6_MANDATORY_FIELDS:
+        if field not in result:
+            errors.append(f"missing mandatory field '{field}'")
+
+    if result.get("verdict") not in VALID_VERDICTS:
+        errors.append(f"invalid verdict '{result.get('verdict')}'")
+
+    rw = result.get("regional_weights", {})
+    if isinstance(rw, dict):
+        rw_sum = sum(rw.values())
+        if rw_sum != 100:
+            errors.append(f"regional_weights sums to {rw_sum}, expected 100")
+    else:
+        errors.append("regional_weights is not a dict")
+
+    rs = result.get("radar_scores", {})
+    if isinstance(rs, dict):
+        missing_keys = RADAR_KEYS - set(rs.keys())
+        extra_keys = set(rs.keys()) - RADAR_KEYS
+        if missing_keys:
+            errors.append(f"radar_scores missing keys: {missing_keys}")
+        if extra_keys:
+            errors.append(f"radar_scores has unexpected keys: {extra_keys}")
+    else:
+        errors.append("radar_scores is not a dict")
+
+    ca = result.get("critical_assumptions", [])
+    if not isinstance(ca, list) or len(ca) != 3:
+        errors.append(f"critical_assumptions must have exactly 3 items, got {len(ca) if isinstance(ca, list) else type(ca)}")
+
+    sc = result.get("signal_scorecard", [])
+    if not isinstance(sc, list) or len(sc) == 0:
+        errors.append("signal_scorecard must be a non-empty list")
+
+    if errors:
+        for e in errors:
+            print(f"[FAIL] {e}")
+        return False
+
+    # ── Print mandatory fields ──────────────────────────────────────────
+    print("Mandatory fields:")
+    print(f"  verdict:          {result['verdict']}")
+    print(f"  confidence_score: {result['confidence_score']}/100")
+    print(f"  verdict_reason:   {result['verdict_reason']}")
+    print(f"  executive_summary:\n    {result['executive_summary']}")
+
+    print(f"\n  signal_scorecard ({len(sc)} signals):")
+    for s in sc:
+        print(f"    [{s.get('direction').upper():8}] [{s.get('weight'):6}] {s.get('signal')}")
+
+    print(f"\n  critical_assumptions:")
+    for i, a in enumerate(ca):
+        print(f"    [{i+1}] IF FALSE: {a.get('consequence_if_false')}")
+        print(f"         ASSUMES:  {a.get('assumption')}")
+
+    print(f"\n  recommended_first_move: {result['recommended_first_move']}")
+
+    print(f"\n  regional_weights (sum={sum(rw.values())}):")
+    for region, weight in rw.items():
+        intensity = result.get("dot_intensity", {}).get(region, "?")
+        print(f"    {region}: weight={weight}% | dot_intensity={intensity}")
+
+    print(f"\n  radar_scores:")
+    for key in sorted(RADAR_KEYS):
+        print(f"    {key}: {rs.get(key)}")
+
+    # ── Print optional fields ───────────────────────────────────────────
+    print("\nOptional fields:")
+    for field in AGENT6_OPTIONAL_FIELDS:
+        val = result.get(field)
+        if field == "market_entry_sequence" and isinstance(val, list):
+            print(f"  {field}:")
+            for phase in val:
+                print(f"    Phase: {phase.get('phase_name')} ({phase.get('timeframe')})")
+                for action in phase.get("actions", []):
+                    print(f"      - {action}")
+        else:
+            print(f"  {field}: {val}")
+
+    print("\n[PASS] Agent 6 returned a valid synthesis with all mandatory fields.")
+    return True
+
+
 if __name__ == "__main__":
-    results = [check_agent1(), check_agent2(), check_agent3(), check_agent4(), check_agent5()]
+    results = [check_agent1(), check_agent2(), check_agent3(), check_agent4(), check_agent5(), check_agent6()]
     sys.exit(0 if all(results) else 1)
