@@ -81,6 +81,13 @@ Agents run sequentially. Each agent receives all previous agent outputs as conte
 | 4 | Persona Generator | Agent 1 + 2 + 3 | 5 synthetic customer persona cards |
 | 5 | Obstacle Detector | Agent 1 + 2 + 3 | Top 5 obstacles with severity |
 | 6 | Synthesizer | All agent outputs | Go/Cautious/No-Go verdict + executive summary |
+| 7 | Simulation Layer | Agent 4 variance profiles + Agent 6 regional weights | 200 synthetic persona instances with conversion outcomes + regional distribution data |
+
+---
+
+## Agent 7 — Simulation Layer
+
+Agent 7 takes the 5 persona archetypes from Agent 4 and their variance_profile objects, rolls key variables randomly per instance using Agent 6 regional_weights for geographic distribution, and generates approximately 200 synthetic customer instances. Each instance is assigned an archetype, a city, and a conversion outcome (converted/abandoned/evaluating) based on their tipping_point_to_high and tipping_point_to_low conditions. This is not random dot generation — every instance is a rolled variant of a real archetype with documented variance. Output feeds the frontend dot map animation. Agent 7 does not call Claude — it is pure Python logic using the structured outputs of Agents 4 and 6.
 
 ---
 
@@ -171,4 +178,5 @@ If an API returns no data for a country, fall back to Claude estimation and flag
 - User authentication
 - Saving or history of simulations
 - More than 6 agents
+- Agent 7 simulation layer (planned but not yet built)
 - Anything not listed here

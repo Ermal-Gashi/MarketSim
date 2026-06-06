@@ -933,6 +933,187 @@ def check_agent6() -> bool:
     return True
 
 
+# Hardcoded Agent 6 output stub for Brazil / TaskFlow
+AGENT6_OUTPUT_STUB = {
+    "verdict": "Cautious Go",
+    "verdict_reason": "Strong urban tech-hub demand offset by a critical LGPD compliance gap that must be closed before any enterprise deal can complete.",
+    "confidence_score": 62,
+    "executive_summary": (
+        "Brazil's developing SaaS market shows genuine pull for remote-team tooling, with 84% internet "
+        "penetration and a 25% YoY growth rate backing the opportunity. Two Critical obstacles — LGPD "
+        "compliance and payment infrastructure — are solvable but require 90-day investment before "
+        "commercial activity. Cultural fit is moderate (62/100); a sales-led motion with Portuguese "
+        "localisation is essential. Enter with a Sao Paulo lighthouse programme while resolving "
+        "compliance in parallel."
+    ),
+    "signal_scorecard": [
+        {"signal": "UAI 76 demands local proof and Portuguese onboarding before any trial commitment", "direction": "negative", "weight": "High"},
+        {"signal": "84% internet penetration exceeds regional average — digital infrastructure is not a blocker", "direction": "positive", "weight": "Medium"},
+        {"signal": "LGPD DPO requirement is a day-one enterprise procurement gate", "direction": "negative", "weight": "High"},
+        {"signal": "Brazil SaaS market growing 25% YoY driven by SME digitalisation", "direction": "positive", "weight": "High"},
+        {"signal": "Pix/boleto payment gap will block first paid conversion attempt", "direction": "negative", "weight": "High"},
+    ],
+    "critical_assumptions": [
+        {
+            "assumption": "TaskFlow will complete Portuguese localisation and LGPD compliance before first paid marketing spend",
+            "consequence_if_false": "Trial pipeline will generate leads that churn at onboarding or payment, wasting budget and burning early reputation",
+        },
+        {
+            "assumption": "At least one Sao Paulo lighthouse customer can be signed within 90 days at a discounted rate",
+            "consequence_if_false": "No local social proof means UAI-76 buyers will not progress past first demo, stalling mid-market pipeline indefinitely",
+        },
+        {
+            "assumption": "BRL/USD rate stays within ±15% of current level during the 12-month entry phase",
+            "consequence_if_false": "USD-denominated mid-tier pricing becomes uncompetitive against Runrun.it, collapsing SME conversion rates",
+        },
+    ],
+    "recommended_first_move": (
+        "Engage a Brazilian privacy law firm this week to appoint a local DPO and begin the LGPD DPA "
+        "draft — this is the single gate blocking every enterprise deal and must run in parallel with "
+        "Portuguese localisation."
+    ),
+    "regional_weights": {
+        "Sao Paulo": 55,
+        "Rio de Janeiro": 30,
+        "Belo Horizonte": 15,
+    },
+    "dot_intensity": {
+        "Sao Paulo": 72,
+        "Rio de Janeiro": 65,
+        "Belo Horizonte": 45,
+    },
+    "radar_scores": {
+        "Market growth": 74,
+        "Cultural fit": 62,
+        "Internet penetration": 84,
+        "Political stability": 40,
+        "Ease of business": 35,
+        "Corruption index": 35,
+    },
+    "time_to_first_revenue": "4-6 months (90 days compliance + 4-8 week first enterprise close)",
+    "estimated_cac": "USD 800-2,400 per seat for sales-led mid-market motion",
+    "biggest_wildcard": "Runrun.it launching an AI auto-assignment feature while TaskFlow is still in compliance setup",
+    "revisit_trigger": "If LGPD compliance takes >120 days or lighthouse programme produces zero signed customers by month 4",
+    "market_entry_sequence": None,
+}
+
+AGENT7_MANDATORY_FIELDS = [
+    "instance_id", "archetype_name", "archetype_index", "city", "region",
+    "lat", "lng", "conversion_outcome", "confidence_score", "pulse_intensity",
+    "spawn_delay_ms", "rolled_variables", "tipping_high_met", "tipping_low_met",
+    "display_name", "job_title", "archetype_label", "avatar_style",
+    "outcome_reason", "deciding_factor",
+]
+VALID_OUTCOMES = {"converted", "evaluating", "abandoned"}
+
+
+def check_agent7() -> bool:
+    from backend.agents.simulation_layer import run
+
+    agent7_input = {
+        "agent4_output": AGENT4_OUTPUT_STUB,
+        "agent6_output": AGENT6_OUTPUT_STUB,
+    }
+
+    print("\n--- Agent 7: Simulation Layer ---")
+    print("Input: agent4=Brazil personas stub, agent6=Brazil synthesizer stub\n")
+
+    try:
+        result = run(agent7_input)
+    except ValueError as exc:
+        print(f"[FAIL] Validation error: {exc}")
+        return False
+    except Exception as exc:
+        print(f"[FAIL] run() raised {type(exc).__name__}: {exc}")
+        return False
+
+    instances = result.get("instances", [])
+    summary = result.get("summary", {})
+    errors = []
+
+    # --- Exactly 200 instances ---
+    if len(instances) != 200:
+        errors.append(f"expected 200 instances, got {len(instances)}")
+
+    # --- All mandatory fields present on every instance ---
+    for i, inst in enumerate(instances):
+        missing = [f for f in AGENT7_MANDATORY_FIELDS if f not in inst]
+        if missing:
+            errors.append(f"instance {i} missing fields: {missing}")
+        if inst.get("conversion_outcome") not in VALID_OUTCOMES:
+            errors.append(f"instance {i} invalid conversion_outcome: {inst.get('conversion_outcome')}")
+
+    # --- Summary internal consistency ---
+    s_total = summary.get("total", -1)
+    s_converted = summary.get("converted", 0)
+    s_evaluating = summary.get("evaluating", 0)
+    s_abandoned = summary.get("abandoned", 0)
+    if s_converted + s_evaluating + s_abandoned != s_total:
+        errors.append(
+            f"summary mismatch: {s_converted}+{s_evaluating}+{s_abandoned} "
+            f"= {s_converted + s_evaluating + s_abandoned} != total={s_total}"
+        )
+    if s_total != 200:
+        errors.append(f"summary.total should be 200, got {s_total}")
+
+    # --- by_region totals must match regional_weights within 15% of 200 ---
+    regional_weights = AGENT6_OUTPUT_STUB["regional_weights"]
+    by_region = summary.get("by_region", {})
+    for region, weight in regional_weights.items():
+        expected = 200 * weight / 100
+        actual = by_region.get(region, {}).get("total", 0)
+        tolerance = 200 * 0.15
+        if abs(actual - expected) > tolerance:
+            errors.append(
+                f"region '{region}': expected ~{expected:.0f} (±{tolerance:.0f}), got {actual}"
+            )
+
+    # --- spawn_delay_ms range 0-8000 ---
+    for i, inst in enumerate(instances):
+        sd = inst.get("spawn_delay_ms", -1)
+        if not (0 <= sd <= 8000):
+            errors.append(f"instance {i} spawn_delay_ms={sd} out of range 0-8000")
+
+    # --- lat/lng non-zero (persona cities all have known coords) ---
+    zero_coords = [i for i, inst in enumerate(instances) if inst.get("lat") == 0.0 and inst.get("lng") == 0.0]
+    if zero_coords:
+        errors.append(f"{len(zero_coords)} instances have (0,0) coordinates: indices {zero_coords[:5]}")
+
+    if errors:
+        for e in errors:
+            print(f"[FAIL] {e}")
+        return False
+
+    # --- Print summary stats ---
+    print("Summary stats:")
+    print(f"  total:           {summary['total']}")
+    print(f"  converted:       {summary['converted']}")
+    print(f"  evaluating:      {summary['evaluating']}")
+    print(f"  abandoned:       {summary['abandoned']}")
+    print(f"  conversion_rate: {summary['conversion_rate']}%")
+
+    print("\n  by_region:")
+    for region, stats in summary["by_region"].items():
+        rw = regional_weights.get(region, "?")
+        print(f"    {region}: total={stats['total']} converted={stats['converted']} rate={stats['rate']}% (weight={rw}%)")
+
+    print("\n  by_archetype:")
+    for arch, stats in summary["by_archetype"].items():
+        print(f"    {arch}: total={stats['total']} converted={stats['converted']} rate={stats['rate']}%")
+
+    # --- Print first 3 instances in full ---
+    print("\nFirst 3 instances (full):")
+    for inst in instances[:3]:
+        print(f"\n  [{inst['instance_id']}]")
+        for key, val in inst.items():
+            if key == "instance_id":
+                continue
+            print(f"    {key}: {val}")
+
+    print("\n[PASS] Agent 7 generated 200 valid instances with consistent summary stats.")
+    return True
+
+
 if __name__ == "__main__":
-    results = [check_agent1(), check_agent2(), check_agent3(), check_agent4(), check_agent5(), check_agent6()]
+    results = [check_agent1(), check_agent2(), check_agent3(), check_agent4(), check_agent5(), check_agent6(), check_agent7()]
     sys.exit(0 if all(results) else 1)
