@@ -1,5 +1,6 @@
 import logging
 import random
+import traceback
 import uuid
 
 logger = logging.getLogger(__name__)
@@ -174,6 +175,94 @@ CITY_COORDS: dict[str, tuple[float, float]] = {
     "Seattle": (47.6062, -122.3321),
     "Boston": (42.3601, -71.0589),
     "Miami": (25.7617, -80.1918),
+    # Belgium
+    "Brussels": (50.8503, 4.3517),
+    "Antwerp": (51.2194, 4.4025),
+    "Ghent": (51.0543, 3.7174),
+    # Russia
+    "Moscow": (55.7558, 37.6173),
+    "Saint Petersburg": (59.9311, 30.3609),
+    "Novosibirsk": (54.9885, 82.9207),
+    # Ukraine
+    "Kyiv": (50.4501, 30.5234),
+    "Kharkiv": (49.9935, 36.2304),
+    # Pakistan
+    "Karachi": (24.8607, 67.0011),
+    "Lahore": (31.5497, 74.3436),
+    "Islamabad": (33.6844, 73.0479),
+    "Faisalabad": (31.4504, 73.1350),
+    "Rawalpindi": (33.5651, 73.0169),
+    # Bangladesh
+    "Dhaka": (23.8103, 90.4125),
+    "Chittagong": (22.3569, 91.7832),
+    # Sri Lanka
+    "Colombo": (6.9271, 79.8612),
+    # Morocco
+    "Casablanca": (33.5731, -7.5898),
+    "Marrakech": (31.6295, -7.9811),
+    "Rabat": (34.0209, -6.8416),
+    # Saudi Arabia
+    "Riyadh": (24.7136, 46.6753),
+    "Jeddah": (21.4858, 39.1925),
+    # Israel
+    "Tel Aviv": (32.0853, 34.7818),
+    "Jerusalem": (31.7683, 35.2137),
+    # Iran
+    "Tehran": (35.6892, 51.3890),
+    "Isfahan": (32.6546, 51.6680),
+    # Kazakhstan
+    "Almaty": (43.2220, 76.8512),
+    "Astana": (51.1801, 71.4460),
+    # Ethiopia
+    "Addis Ababa": (9.0320, 38.7469),
+    # Ghana
+    "Accra": (5.6037, -0.1870),
+    # Tanzania
+    "Dar es Salaam": (6.7924, 39.2083),
+    # Algeria
+    "Algiers": (36.7372, 3.0865),
+    # Iraq
+    "Baghdad": (33.3152, 44.3661),
+    # Netherlands
+    "Amsterdam": (52.3676, 4.9041),
+    "Rotterdam": (51.9244, 4.4777),
+    "The Hague": (52.0705, 4.3007),
+    # Sweden
+    "Stockholm": (59.3293, 18.0686),
+    "Gothenburg": (57.7089, 11.9746),
+    # Norway
+    "Oslo": (59.9139, 10.7522),
+    # Denmark
+    "Copenhagen": (55.6761, 12.5683),
+    # Finland
+    "Helsinki": (60.1699, 24.9384),
+    # Switzerland
+    "Zurich": (47.3769, 8.5417),
+    "Geneva": (46.2044, 6.1432),
+    # Austria
+    "Vienna": (48.2082, 16.3738),
+    # Portugal
+    "Lisbon": (38.7223, -9.1393),
+    "Porto": (41.1579, -8.6291),
+    # Greece
+    "Athens": (37.9838, 23.7275),
+    # Czech Republic
+    "Prague": (50.0755, 14.4378),
+    # Hungary
+    "Budapest": (47.4979, 19.0402),
+    # Romania
+    "Bucharest": (44.4268, 26.1025),
+    # Serbia
+    "Belgrade": (44.7866, 20.4489),
+    # New Zealand
+    "Auckland": (-36.8485, 174.7633),
+    "Wellington": (-41.2865, 174.7762),
+    # Ireland
+    "Dublin": (53.3498, -6.2603),
+    # Italy
+    "Rome": (41.9028, 12.4964),
+    "Milan": (45.4654, 9.1859),
+    "Naples": (40.8518, 14.2681),
 }
 
 JITTER = 0.3
@@ -205,7 +294,7 @@ def _infer_gender(first_name: str) -> str:
     first = first_name.lower()
     if first in _FEMALE_NAMES:
         return "female"
-    return "male"  # default to male if not found in either list
+    return "male"
 
 
 def _infer_avatar_style(job_title: str, first_name: str) -> str:
@@ -264,7 +353,6 @@ def _build_instances(personas: list[dict], regional_weights: dict[str, int]) -> 
         vp = persona.get("variance_profile", {})
         key_vars: list[str] = vp.get("key_variables", [])
         archetype_name = persona.get("archetype_name", f"Archetype {arch_idx}")
-        base_city = persona.get("city", "Unknown")
         persona_name = persona.get("name", "Unknown")
         persona_age = persona.get("age", 0)
         job_title = persona.get("job_title", "Unknown")
@@ -291,14 +379,11 @@ def _build_instances(personas: list[dict], regional_weights: dict[str, int]) -> 
                 pulse = random.randint(35, 69)
 
             spawn_delay = (100 - confidence) * 80
-            # Bug 1 fix: city is derived from the picked region so they always match.
-            # Agent 6 regional_weights keys are city/area names (e.g. "São Paulo").
             region = random.choices(regions, weights=region_w, k=1)[0]
             city = region
             lat, lng = _get_coords(city)
 
             first_name = persona_name.split()[0] if persona_name else "Unknown"
-            # Pre-compute display_name so we can pass first_name to _infer_avatar_style
             display_name = f"{first_name}, {persona_age}"
 
             instances.append({
@@ -319,7 +404,6 @@ def _build_instances(personas: list[dict], regional_weights: dict[str, int]) -> 
                 "display_name": display_name,
                 "job_title": job_title,
                 "archetype_label": archetype_name,
-                # Bug 2 fix: gender inferred from first_name, not random
                 "avatar_style": _infer_avatar_style(job_title, first_name),
                 "outcome_reason": _build_outcome_reason(rolled, outcome),
                 "deciding_factor": _pick_deciding_factor(rolled, outcome),
@@ -388,24 +472,47 @@ def _validate(instances: list[dict], summary: dict) -> None:
 
 
 def run(inputs: dict) -> dict:
-    agent4_output = inputs["agent4_output"]
-    agent6_output = inputs["agent6_output"]
+    try:
+        agent4_output = inputs["agent4_output"]
+        agent6_output = inputs["agent6_output"]
 
-    personas = agent4_output.get("personas", [])
-    regional_weights: dict[str, int] = agent6_output.get("regional_weights", {})
+        personas = agent4_output.get("personas", [])
+        regional_weights: dict[str, int] = agent6_output.get("regional_weights", {})
 
-    if not personas:
-        raise ValueError("agent4_output must contain a non-empty 'personas' list")
-    if not regional_weights:
-        raise ValueError("agent6_output must contain a non-empty 'regional_weights' dict")
+        if not personas:
+            raise ValueError("agent4_output must contain a non-empty 'personas' list")
+        if not regional_weights:
+            raise ValueError("agent6_output must contain a non-empty 'regional_weights' dict")
 
-    instances = _build_instances(personas, regional_weights)
-    summary = _build_summary(instances)
-    _validate(instances, summary)
+        logger.info("Agent 7: starting — %d personas, %d regions", len(personas), len(regional_weights))
 
-    logger.info(
-        "Simulation Layer: %d instances — converted=%d evaluating=%d abandoned=%d rate=%.1f%%",
-        summary["total"], summary["converted"], summary["evaluating"],
-        summary["abandoned"], summary["conversion_rate"],
-    )
-    return {"instances": instances, "summary": summary}
+        instances = _build_instances(personas, regional_weights)
+        logger.info("Agent 7: built %d raw instances, normalizing to 200", len(instances))
+
+        # Normalize to exactly 200 — frontend dot map requires exactly 200 instances
+        if len(instances) > 200:
+            instances = random.sample(instances, 200)
+        elif len(instances) < 200:
+            shortfall = 200 - len(instances)
+            extras = []
+            for orig in random.choices(instances, k=shortfall):
+                copy = dict(orig)
+                copy["instance_id"] = str(uuid.uuid4())
+                extras.append(copy)
+            instances = instances + extras
+
+        logger.info("Agent 7: normalized to %d instances", len(instances))
+
+        summary = _build_summary(instances)
+        _validate(instances, summary)
+
+        logger.info(
+            "Agent 7: complete — converted=%d evaluating=%d abandoned=%d rate=%.1f%%",
+            summary["converted"], summary["evaluating"],
+            summary["abandoned"], summary["conversion_rate"],
+        )
+        return {"instances": instances, "summary": summary}
+
+    except Exception:
+        logger.error("Agent 7 failed: %s", traceback.format_exc())
+        raise

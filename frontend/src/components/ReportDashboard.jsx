@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import PersonaCards from './PersonaCards'
 import HeroMap from './HeroMap'
 import ObstacleCards from './ObstacleCards'
+import MarketStats from './MarketStats'
+import RadarChart from './RadarChart'
+import CulturalFit from './CulturalFit'
+import EntryRoadmap from './EntryRoadmap'
+import BottomStrip from './BottomStrip'
 
 // ── placeholder cell ──────────────────────────────────────────────────────────
 
@@ -42,12 +47,6 @@ export default function ReportDashboard({ completeReport, theme }) {
   const threeColGrid = {
     display: 'grid',
     gridTemplateColumns: '1fr 2.5fr 1fr',
-    gap: 16,
-  }
-
-  const thirdColGrid = {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr 1fr',
     gap: 16,
   }
 
@@ -93,25 +92,35 @@ export default function ReportDashboard({ completeReport, theme }) {
 
       {/* ── Row 2 — Analytics: Market Data | Signal Radar | Cultural Fit ── */}
       <div style={rowStyle}>
-        <div style={{ ...threeColGrid, minHeight: 400 }}>
-          <PlaceholderCell label="Market Data" theme={theme} />
-          <PlaceholderCell label="Signal Radar" theme={theme} />
-          <PlaceholderCell label="Cultural Fit" theme={theme} />
+        <div style={{ ...threeColGrid, minHeight: 400, alignItems: 'stretch' }}>
+          <div style={{ minWidth: 0 }}>
+            <MarketStats agent2Output={completeReport?.agent2_output || {}} theme={theme} />
+          </div>
+          <div style={{ minWidth: 0 }}>
+            <RadarChart radarScores={completeReport?.agent6_output?.radar_scores || {}} theme={theme} />
+          </div>
+          <div style={{ minWidth: 0 }}>
+            <CulturalFit agent3Output={completeReport?.agent3_output || {}} theme={theme} />
+          </div>
         </div>
       </div>
 
       {/* ── Row 3 — Entry Roadmap (full width) ── */}
       <div style={rowStyle}>
-        <PlaceholderCell label="Entry Roadmap" theme={theme} style={{ minHeight: 180 }} />
+        <EntryRoadmap
+          marketEntrySequence={completeReport?.agent6_output?.market_entry_sequence || []}
+          theme={theme}
+        />
       </div>
 
       {/* ── Row 4 — Bottom Strip ── */}
       <div style={rowStyle}>
-        <div style={{ ...thirdColGrid, minHeight: 300 }}>
-          <PlaceholderCell label="Executive Summary + Assumptions" theme={theme} />
-          <PlaceholderCell label="First Move + Wildcard" theme={theme} />
-          <PlaceholderCell label="Competitors" theme={theme} />
-        </div>
+        <BottomStrip
+          agent6Output={completeReport?.agent6_output || {}}
+          agent3Output={completeReport?.agent3_output || {}}
+          agent2Output={completeReport?.agent2_output || {}}
+          theme={theme}
+        />
       </div>
     </div>
   )

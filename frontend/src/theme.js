@@ -32,7 +32,7 @@ export const themes = {
     textInput: '#333330',
     textPlaceholder: '#BBBBB8',
     accentWine: '#8B3A52',
-    accentActive: '#8B3A52',
+    accentActive: '#4DBBAA',
     bgBar: 'rgba(244,244,240,0.96)',
     gridMajor: '#CECEC8',
     gridMinor: '#DCDCD7',

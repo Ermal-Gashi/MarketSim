@@ -41,7 +41,7 @@ function SkeletonCard({ theme }) {
   return (
     <div style={{
       background: theme.bgCard, border: `1px solid ${theme.borderDefault}`,
-      borderRadius: 10, padding: 12, marginBottom: 8,
+      borderRadius: 10, padding: 12, flex: 1,
       display: 'flex', alignItems: 'center', gap: 10, minHeight: 80,
     }}>
       <div style={{ ...pulse, width: 52, height: 52, borderRadius: 8, flexShrink: 0 }} />
@@ -146,7 +146,7 @@ function PersonaMiniCard({ persona, theme, onClick, onArchetypeHover }) {
         border: `1px solid ${hovered ? theme.borderStrong : theme.borderDefault}`,
         borderRadius: 10,
         padding: 12,
-        marginBottom: 8,
+        flex: 1,
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
@@ -176,7 +176,7 @@ export default function PersonaCards({ personas, theme, onArchetypeHover }) {
   const list = personas && personas.length > 0 ? personas : null
 
   return (
-    <div style={{ position: 'relative', height: '100%', width: '100%', maxWidth: '100%', overflowX: 'hidden', boxSizing: 'border-box' }}>
+    <div style={{ position: 'relative', height: '100%', width: '100%', maxWidth: '100%', overflowX: 'hidden', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 8 }}>
       <style>{`
         @keyframes slide-in-left {
           from { opacity: 0; transform: translateX(-14px); }

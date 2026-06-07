@@ -28,7 +28,7 @@ function gridBackground(theme) {
 }
 
 // TEMP: set to false before production
-const TEST_MODE = true
+const TEST_MODE = false
 
 const MOCK_REPORT = {
   product_description: 'Test chip brand',

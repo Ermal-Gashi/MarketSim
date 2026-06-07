@@ -24,11 +24,13 @@ router = APIRouter()
 _HOFSTEDE_PATH = Path(__file__).parent.parent / "data" / "hofstede.json"
 _BIZ_ENV_PATH = Path(__file__).parent.parent / "data" / "business_environment.json"
 
-# ISO 3166-1 alpha-2 codes for top 30 target markets
+# ISO 3166-1 alpha-2 codes for target markets
 _COUNTRY_CODES: dict[str, str] = {
+    # Americas
     "argentina": "AR",
     "australia": "AU",
     "brazil": "BR",
+    "brasil": "BR",
     "canada": "CA",
     "chile": "CL",
     "china": "CN",
@@ -49,17 +51,108 @@ _COUNTRY_CODES: dict[str, str] = {
     "singapore": "SG",
     "south africa": "ZA",
     "south korea": "KR",
+    "korea": "KR",
     "spain": "ES",
     "taiwan": "TW",
     "thailand": "TH",
     "turkey": "TR",
+    "turkiye": "TR",
     "uae": "AE",
     "united arab emirates": "AE",
     "united kingdom": "GB",
     "uk": "GB",
+    "britain": "GB",
+    "great britain": "GB",
+    "england": "GB",
     "united states": "US",
     "usa": "US",
+    "america": "US",
     "vietnam": "VN",
+    "viet nam": "VN",
+    # Europe
+    "pakistan": "PK",
+    "belgium": "BE",
+    "russia": "RU",
+    "russian federation": "RU",
+    "ukraine": "UA",
+    "netherlands": "NL",
+    "holland": "NL",
+    "sweden": "SE",
+    "norway": "NO",
+    "denmark": "DK",
+    "finland": "FI",
+    "switzerland": "CH",
+    "austria": "AT",
+    "portugal": "PT",
+    "greece": "GR",
+    "czech republic": "CZ",
+    "czechia": "CZ",
+    "hungary": "HU",
+    "romania": "RO",
+    "serbia": "RS",
+    "croatia": "HR",
+    "bulgaria": "BG",
+    "ireland": "IE",
+    "italy": "IT",
+    "italia": "IT",
+    "luxembourg": "LU",
+    "slovakia": "SK",
+    "slovenia": "SI",
+    "estonia": "EE",
+    "latvia": "LV",
+    "lithuania": "LT",
+    "belarus": "BY",
+    "moldova": "MD",
+    "albania": "AL",
+    "north macedonia": "MK",
+    "bosnia": "BA",
+    "montenegro": "ME",
+    "kosovo": "XK",
+    "iceland": "IS",
+    "malta": "MT",
+    "cyprus": "CY",
+    # Middle East
+    "israel": "IL",
+    "iran": "IR",
+    "iraq": "IQ",
+    "saudi arabia": "SA",
+    "ksa": "SA",
+    "jordan": "JO",
+    "lebanon": "LB",
+    "kuwait": "KW",
+    "qatar": "QA",
+    "bahrain": "BH",
+    "oman": "OM",
+    "yemen": "YE",
+    "syria": "SY",
+    # Africa
+    "morocco": "MA",
+    "algeria": "DZ",
+    "ethiopia": "ET",
+    "ghana": "GH",
+    "tanzania": "TZ",
+    "uganda": "UG",
+    "tunisia": "TN",
+    "libya": "LY",
+    "sudan": "SD",
+    "angola": "AO",
+    "cameroon": "CM",
+    "senegal": "SN",
+    "ivory coast": "CI",
+    "rwanda": "RW",
+    # South & Central Asia
+    "bangladesh": "BD",
+    "sri lanka": "LK",
+    "nepal": "NP",
+    "kazakhstan": "KZ",
+    "uzbekistan": "UZ",
+    "georgia": "GE",
+    "armenia": "AM",
+    "azerbaijan": "AZ",
+    "myanmar": "MM",
+    "burma": "MM",
+    # Oceania
+    "new zealand": "NZ",
 }
 
 _AGENT_NAMES = {
@@ -160,7 +253,7 @@ async def _pipeline(
     outputs["agent3_output"] = agent3_output
     yield _sse({"agent": 3, "name": _AGENT_NAMES[3], "status": "done", "output": agent3_output})
 
-    # Agent 4 — extended timeout (240s) due to max_tokens=4000 persona output
+    # Agent 4
     yield _sse({"agent": 4, "name": _AGENT_NAMES[4], "status": "running"})
     try:
         loop = asyncio.get_event_loop()
@@ -182,7 +275,7 @@ async def _pipeline(
     outputs["agent4_output"] = agent4_output
     yield _sse({"agent": 4, "name": _AGENT_NAMES[4], "status": "done", "output": agent4_output})
 
-    # Agent 5 — fetch household consumption in the thread pool alongside the agent
+    # Agent 5
     yield _sse({"agent": 5, "name": _AGENT_NAMES[5], "status": "running"})
     try:
         loop = asyncio.get_event_loop()
@@ -217,7 +310,6 @@ async def _pipeline(
     yield _sse({"agent": 5, "name": _AGENT_NAMES[5], "status": "done", "output": agent5_output})
 
     # Agent 6
-    # Derive biz_env dict for synthesizer (it reads from inputs.get("biz_env"))
     country_name = agent2_output.get("country_name", target_market)
     biz_env_entry = business_environment.get(country_name) or {}
 
@@ -248,6 +340,7 @@ async def _pipeline(
     # Agent 7
     yield _sse({"agent": 7, "name": _AGENT_NAMES[7], "status": "running"})
     try:
+        logger.info("Agent 7 starting simulation layer")
         agent7_output = await _run_agent(
             simulation_layer,
             {
@@ -255,6 +348,7 @@ async def _pipeline(
                 "agent6_output": agent6_output,
             },
         )
+        logger.info("Agent 7 completed: %d instances", len(agent7_output.get("instances", [])))
     except asyncio.TimeoutError:
         yield _sse({"agent": 7, "name": _AGENT_NAMES[7], "status": "error",
                     "message": "Agent timed out after 300 seconds"})
@@ -276,6 +370,8 @@ async def _pipeline(
         "agent7_output": agent7_output,
     }
 
+    await asyncio.sleep(0)
+
     yield _sse({
         "agent": 7,
         "name": _AGENT_NAMES[7],
@@ -292,7 +388,6 @@ async def simulate(
     current_market: str = "",
     target_market: str = "",
 ):
-    # Validate required params
     for field, value in [
         ("product_description", product_description),
         ("current_market", current_market),

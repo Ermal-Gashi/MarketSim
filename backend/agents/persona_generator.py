@@ -37,6 +37,7 @@ DIVERSITY RULES — you must follow all of these without exception:
 3. Include both decision makers (budget authority) and champions (influence without signing power)
 4. Age range across all 5 personas must span at least 15 years
 5. No two personas may share the same job title
+6. Socioeconomic diversity is mandatory — the 5 personas must NOT all be urban professionals or white-collar workers. At minimum one persona must represent a middle-income or working-class background relevant to the target market — a teacher, small business owner, tradesperson, or similar. Their income level, education, and social context must be grounded in the target market's GDP per capita and class structure. A persona earning 3x the national average should not be the default — vary income levels realistically across the 5 archetypes.
 
 GROUNDING RULES:
 - Names must be realistic and culturally appropriate for the target market
@@ -161,7 +162,7 @@ def run(inputs: dict) -> dict:
         messaging=_fmt_list(agent3.get("messaging_recommendations")),
     )
 
-    result = call_claude(SYSTEM_PROMPT, user_prompt, max_tokens=4000)
+    result = call_claude(SYSTEM_PROMPT, user_prompt, max_tokens=6000)
 
     # --- Validate ---
     personas = result.get("personas")

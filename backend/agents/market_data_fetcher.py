@@ -37,7 +37,7 @@ MANDATORY — always include, never omit or rename:
 - "languages": array of strings — official or dominant languages
 - "market_maturity": string — MUST be one of: "emerging", "developing", "mature" — assessed specifically for the given product category, not the country overall
 - "payment_infrastructure": string — describe the dominant payment rails, digital wallet adoption, card penetration, and any friction points relevant to SaaS or digital product sales
-- "major_local_competitors": array of strings — name actual local or regionally dominant competitors in this product category; if none exist, say so explicitly with a short explanation in a single string inside the array
+- "major_local_competitors": array of strings — name actual local or regionally dominant competitors in this product category; if none exist, say so explicitly with a short explanation in a single string inside the array. The major_local_competitors field must contain a minimum of 6 competitors and ideally 8-10. Include both large international players present in this market AND smaller local/regional competitors. Each competitor should be a descriptive string including the company name and a brief note about their positioning, e.g. "Aldi — German discount grocery giant with 40% private label market share". Do not return fewer than 6 competitors under any circumstances.
 - "regulatory_notes": string — relevant legal, data privacy, or business registration considerations a foreign company must know before entering this market
 
 OPTIONAL — include if clearly inferable, otherwise set to null:

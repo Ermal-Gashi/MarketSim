@@ -26,7 +26,7 @@ function SkeletonCard({ theme }) {
   return (
     <div style={{
       background: theme.bgCard, border: `1px solid ${theme.borderDefault}`,
-      borderRadius: 10, padding: '14px 12px', marginBottom: 8,
+      borderRadius: 10, padding: '14px 12px', flex: 1,
       minHeight: 80, display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center', gap: 10,
     }}>
@@ -109,7 +109,7 @@ function ObstacleMiniCard({ obstacle, theme, onClick }) {
         border: `1px solid ${hovered ? theme.borderStrong : theme.borderDefault}`,
         borderRadius: 10,
         padding: '14px 12px',
-        marginBottom: 8,
+        flex: 1,
         cursor: 'pointer',
         minHeight: 80,
         display: 'flex',
@@ -154,7 +154,7 @@ export default function ObstacleCards({ obstacles, theme }) {
   const list = obstacles && obstacles.length > 0 ? obstacles : null
 
   return (
-    <div style={{ position: 'relative', height: '100%', overflow: 'hidden', width: '100%', maxWidth: '100%', minWidth: 0, overflowX: 'hidden', boxSizing: 'border-box' }}>
+    <div style={{ position: 'relative', height: '100%', overflow: 'hidden', width: '100%', maxWidth: '100%', minWidth: 0, overflowX: 'hidden', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 8 }}>
       <style>{`
         @keyframes slide-in-right {
           from { opacity: 0; transform: translateX(14px); }

@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 MODEL = "claude-sonnet-4-6"
 MAX_TOKENS = 2000
+MAX_TOKENS_LIMIT = 8000  # hard cap — callers may pass up to this value
 
 _client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
@@ -23,6 +24,7 @@ def _strip_fences(text: str) -> str:
 
 def call_claude(system_prompt: str, user_prompt: str, max_tokens: int = MAX_TOKENS) -> dict:
     """Call Claude and return parsed JSON. Retries once on JSON parse failure."""
+    max_tokens = min(max_tokens, MAX_TOKENS_LIMIT)
     for attempt in range(2):
         response = _client.messages.create(
             model=MODEL,

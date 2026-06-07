@@ -117,10 +117,20 @@ export default function HeroMap({ agent6Output, agent7Output, targetMarket, them
 
         const features = feature ? [feature] : world.features.slice(0, 1)
 
+        // Fix 1 — fitSize on the matched country's GeoJSON feature so the
+        // projection is scaled/centered specifically for that country
         const projection = d3.geoMercator()
           .fitSize([width, height], { type: 'FeatureCollection', features })
 
         const path = d3.geoPath().projection(projection)
+
+        // debug — verify the projection lands within SVG bounds for this country
+        console.log('HeroMap: matched feature for target market:', target, '→', feature?.properties?.name)
+        console.log('HeroMap: projected sample (Karachi 24.8607, 67.0011):', projection([67.0011, 24.8607]))
+        console.log('HeroMap: first 5 instances projected:', instances.slice(0, 5).map((inst) => {
+          const p = projection([inst.lng, inst.lat])
+          return { city: inst.city, lat: inst.lat, lng: inst.lng, projected: p }
+        }))
 
         // draw country — Fix 1: fill matches card background (no nested inner box)
         g.selectAll('path')
@@ -131,6 +141,10 @@ export default function HeroMap({ agent6Output, agent7Output, targetMarket, them
           .attr('stroke', theme.bgPage.startsWith('#F') ? '#8A8A95' : '#4A4A5A')
           .attr('stroke-width', theme.bgPage.startsWith('#F') ? 2 : 2.5)
 
+        // dedicated layer for dots — appended AFTER the country path so dots
+        // always render on top and are never hidden/clipped behind the silhouette
+        const dotLayer = g.append('g').attr('class', 'dot-layer')
+
         // spawn dots after country renders
         instances.forEach((inst) => {
           const tid = setTimeout(() => {
@@ -139,7 +153,7 @@ export default function HeroMap({ agent6Output, agent7Output, targetMarket, them
             if (!projected) return
             const [px, py] = projected
 
-            const circle = d3.select(svg).select('g').append('circle')
+            const circle = dotLayer.append('circle')
               .attr('cx', px)
               .attr('cy', py)
               .attr('r', 0)
@@ -242,7 +256,8 @@ export default function HeroMap({ agent6Output, agent7Output, targetMarket, them
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflow: 'hidden',
+        overflowX: 'clip',
+        overflowY: 'visible',
       }}>
 
         {/* ── Verdict stamp — wrapper pulses so corners + text animate together ── */}
@@ -286,7 +301,7 @@ export default function HeroMap({ agent6Output, agent7Output, targetMarket, them
         <div style={{ position: 'relative', width: '100%', marginTop: 16, flex: 1 }}>
           <svg
             ref={svgRef}
-            style={{ width: '100%', height: MAP_HEIGHT, display: 'block' }}
+            style={{ width: '100%', height: MAP_HEIGHT, display: 'block', overflow: 'visible' }}
           />
           <Tooltip dot={tooltip} theme={theme} />
         </div>
